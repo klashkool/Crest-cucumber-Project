@@ -1,0 +1,31 @@
+package com.Facilities_Modules;
+
+import java.util.List;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import com.Utils.Base;
+import com.Utils.WebdriverWait;
+
+public class Facilities_Facilities_StockManagement extends Base {
+
+	public static void PO_Receive_Shpmnt() {
+
+		List<WebElement> loc_table = WebdriverWait.findElements("xpath",
+				"//*[@id='selectAllForm']/div[2]/table/tbody/tr");
+
+		for (int j = 1; j <= loc_table.size() - 1; j++) {
+			Select Loc_DD = new Select(WebdriverWait.findElement("id", "locationSeqId_o_" + (j - 1)));
+			List<WebElement> DD = Loc_DD.getOptions();
+			DD.size();
+			if (DD.size() > 1) {
+				Loc_DD.selectByVisibleText("500");
+			} else if (DD.size() <= 1) {
+				Loc_DD.selectByVisibleText("-Select-");
+			}
+		}
+		WebdriverWait.findElement("link", "Receive").click();
+		WebdriverWait.findElement("xpath", "//*[@id='content-main-section']/div[2]/table/tbody/tr[2]/td[1]/a").click();
+	}
+}

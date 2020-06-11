@@ -1,0 +1,22 @@
+Feature: PO with Inv & Adhoc Flow
+
+Background: Login to the Application
+Given Launch the Application
+Then Login with valid Credentials
+
+
+@Test10
+Scenario: Create PO with Inventory & Adhoc
+
+	Given Create New PO Inv with Adhoc & Enter Organization & Supplier
+	And Add Ship Groups for PO Inv with Adhoc
+	And Add Products for PO Inv with Adhoc
+	Then Validate GrandTotal & Tax for PO Inv with Adhoc
+	And Approve PO Inv with Adhoc
+	
+@Test11
+Scenario: Receive Inventory for Inv & Adhoc	
+	
+	Given  Receive Inventory Products
+	Then Receive Adhoc Products
+	

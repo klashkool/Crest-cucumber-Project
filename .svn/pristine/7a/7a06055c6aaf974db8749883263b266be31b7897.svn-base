@@ -1,0 +1,73 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "line": 4,
+        "name": "Login to the Application",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 13344454600,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "Launch the Application",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 4335194000,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "Login with valid Credentials",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 42,
+        "name": "Create Purchase Return",
+        "description": "",
+        "id": "po-with-inventory-flow;create-purchase-return",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 10879841400,
+              "status": "passed"
+            },
+            "line": 44,
+            "name": "Create PO Return",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.create_PO_Return()"
+            },
+            "keyword": "Given "
+          }
+        ],
+        "tags": [
+          {
+            "line": 41,
+            "name": "@Test6"
+          }
+        ]
+      }
+    ],
+    "name": "PO with Inventory Flow",
+    "description": "",
+    "id": "po-with-inventory-flow",
+    "keyword": "Feature",
+    "uri": "1_PO with Inventory Flow.feature"
+  }
+]

@@ -1,0 +1,144 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "line": 3,
+        "name": "Login to the Application",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 14136727800,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "Launch the Application",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 5602554300,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "Login with valid Credentials",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 13,
+        "name": "Create SO Offline Payment Flow",
+        "description": "",
+        "id": "so-offline-payment-flow;create-so-offline-payment-flow",
+        "after": [
+          {
+            "result": {
+              "duration": 787674300,
+              "status": "passed"
+            },
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.TearDown()"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 10606088800,
+              "status": "passed"
+            },
+            "line": 15,
+            "name": "Create New SO - Offline Flow",
+            "match": {
+              "location": "SO_OfflinePayment_Flow_Stepdef.create_New_SO_Offline_Flow()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 6373908600,
+              "status": "passed"
+            },
+            "line": 16,
+            "name": "Add Shipping Details - Offline Flow",
+            "match": {
+              "location": "SO_OfflinePayment_Flow_Stepdef.add_Shipping_Details_Offline_Flow()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 49634648300,
+              "status": "passed"
+            },
+            "line": 17,
+            "name": "Add Order Items - Offline Flow",
+            "match": {
+              "location": "SO_OfflinePayment_Flow_Stepdef.add_Order_Items_Offline_Flow()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 3391292300,
+              "status": "passed"
+            },
+            "line": 18,
+            "name": "Review \u0026 Create SO - Offline Flow",
+            "match": {
+              "location": "SO_OfflinePayment_Flow_Stepdef.review_Create_SO_Offline_Flow()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 150960400,
+              "status": "passed"
+            },
+            "line": 19,
+            "name": "Validate GrandTotal \u0026 Tax for SO - Offline Flow",
+            "match": {
+              "location": "SO_OfflinePayment_Flow_Stepdef.validate_GrandTotal_Tax_for_SO_Offline_Flow()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 2236423500,
+              "status": "passed"
+            },
+            "line": 20,
+            "name": "Approve SO - Offline Flow",
+            "match": {
+              "location": "SO_OfflinePayment_Flow_Stepdef.approve_SO_Offline_Flow()"
+            },
+            "keyword": "And "
+          }
+        ],
+        "tags": [
+          {
+            "line": 12,
+            "name": "@Test32"
+          }
+        ]
+      }
+    ],
+    "name": "SO Offline Payment Flow",
+    "description": "",
+    "id": "so-offline-payment-flow",
+    "keyword": "Feature",
+    "uri": "4_SO OfflinePayment Flow.feature"
+  }
+]

@@ -1,0 +1,66 @@
+$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("1_PO with Inventory Flow.feature");
+formatter.feature({
+  "line": 1,
+  "name": "PO with Inventory Flow",
+  "description": "",
+  "id": "po-with-inventory-flow",
+  "keyword": "Feature"
+});
+formatter.background({
+  "line": 4,
+  "name": "Login to the Application",
+  "description": "",
+  "type": "background",
+  "keyword": "Background"
+});
+formatter.step({
+  "line": 5,
+  "name": "Launch the Application",
+  "keyword": "Given "
+});
+formatter.step({
+  "line": 6,
+  "name": "Login with valid Credentials",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+});
+formatter.result({
+  "duration": 15372960800,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+});
+formatter.result({
+  "duration": 11119297900,
+  "error_message": "java.lang.NullPointerException\r\n\tat com.Crest_ERP_Login.Crest_Login.Login(Crest_Login.java:16)\r\n\tat com.Crest_Scenarios_StepDefinitions.PO_Inventory_Flow_Stepdef.login_with_valid_Credentials(PO_Inventory_Flow_Stepdef.java:33)\r\n\tat ✽.Then Login with valid Credentials(1_PO with Inventory Flow.feature:6)\r\n",
+  "status": "failed"
+});
+formatter.scenario({
+  "line": 26,
+  "name": "Receive PO Inventory",
+  "description": "",
+  "id": "po-with-inventory-flow;receive-po-inventory",
+  "type": "scenario",
+  "keyword": "Scenario",
+  "tags": [
+    {
+      "line": 25,
+      "name": "@Test3"
+    }
+  ]
+});
+formatter.step({
+  "line": 28,
+  "name": "Receive Inventory for all the facilities - Inv",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.receive_Inventory_for_all_the_facilities_Inv()"
+});
+formatter.result({
+  "status": "skipped"
+});
+});

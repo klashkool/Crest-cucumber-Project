@@ -1,0 +1,94 @@
+$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("4_SO OfflinePayment Flow.feature");
+formatter.feature({
+  "line": 1,
+  "name": "SO Offline Payment Flow",
+  "description": "",
+  "id": "so-offline-payment-flow",
+  "keyword": "Feature"
+});
+formatter.background({
+  "line": 3,
+  "name": "Login to the Application",
+  "description": "",
+  "type": "background",
+  "keyword": "Background"
+});
+formatter.step({
+  "line": 4,
+  "name": "Launch the Application",
+  "keyword": "Given "
+});
+formatter.step({
+  "line": 5,
+  "name": "Login with valid Credentials",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+});
+formatter.result({
+  "duration": 15115560300,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+});
+formatter.result({
+  "duration": 5852550500,
+  "status": "passed"
+});
+formatter.scenario({
+  "line": 43,
+  "name": "Validate all the Transactions under Finance Module - SO Offline Payment Flow",
+  "description": "",
+  "id": "so-offline-payment-flow;validate-all-the-transactions-under-finance-module---so-offline-payment-flow",
+  "type": "scenario",
+  "keyword": "Scenario",
+  "tags": [
+    {
+      "line": 42,
+      "name": "@Test37"
+    }
+  ]
+});
+formatter.step({
+  "line": 45,
+  "name": "Validate Accounting transactions with ShipmentID under Finance Module - SO Offline Payment Flow",
+  "keyword": "Given "
+});
+formatter.step({
+  "line": 46,
+  "name": "Validate Accounting transactions with InvoiceID under Finance Module - SO Offline Payment Flow",
+  "keyword": "Then "
+});
+formatter.step({
+  "line": 47,
+  "name": "Validate Accounting transactions with PaymentID under Finance Module - SO Offline Payment Flow",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "SO_OfflinePayment_Flow_Stepdef.validate_Accounting_transactions_with_ShipmentID_under_Finance_Module_SO_Offline_Payment_Flow()"
+});
+formatter.result({
+  "duration": 38170790100,
+  "status": "passed"
+});
+formatter.match({
+  "location": "SO_OfflinePayment_Flow_Stepdef.validate_Accounting_transactions_with_InvoiceID_under_Finance_Module_SO_Offline_Payment_Flow()"
+});
+formatter.result({
+  "duration": 19464379200,
+  "status": "passed"
+});
+formatter.match({
+  "location": "SO_OfflinePayment_Flow_Stepdef.validate_Accounting_transactions_with_PaymentID_under_Finance_Module_SO_Offline_Payment_Flow()"
+});
+formatter.result({
+  "duration": 6900990700,
+  "status": "passed"
+});
+formatter.after({
+  "duration": 829635000,
+  "status": "passed"
+});
+});

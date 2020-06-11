@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="1" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="1" time="170.626185">
+<testcase classname="PO with Encumbrance Flow" name="Create PO with Encumbrance" time="170.626185">
+<failure message="java.lang.IndexOutOfBoundsException: Index: 8, Size: 8&#13;&#10;&#9;at java.util.ArrayList.rangeCheck(Unknown Source)&#13;&#10;&#9;at java.util.ArrayList.get(Unknown Source)&#13;&#10;&#9;at com.Procurement_Modules.Procurement_PurchaseOrder.PO_Enc_GrdTotal_Val(Procurement_PurchaseOrder.java:470)&#13;&#10;&#9;at com.PO_Scenarios_StepDefinitions.PO_Enc_Flow_Stepdef.validate_GrandTotal_Tax_for_PO_with_Encumbrance(PO_Enc_Flow_Stepdef.java:37)&#13;&#10;&#9;at ✽.Then Validate GrandTotal &amp; Tax for PO with Encumbrance(3_PO with Encumbrance Flow.feature:14)&#13;&#10;"><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Create New PO with Encumbrance & Enter Organization & Supplier........passed
+And Add Ship Groups for PO with Encumbrance.................................passed
+And Add Products for PO with Encumbrance....................................passed
+Then Validate GrandTotal & Tax for PO with Encumbrance......................failed
+And Approve PO for PO with Encumbrance......................................skipped
+
+StackTrace:
+java.lang.IndexOutOfBoundsException: Index: 8, Size: 8
+	at java.util.ArrayList.rangeCheck(Unknown Source)
+	at java.util.ArrayList.get(Unknown Source)
+	at com.Procurement_Modules.Procurement_PurchaseOrder.PO_Enc_GrdTotal_Val(Procurement_PurchaseOrder.java:470)
+	at com.PO_Scenarios_StepDefinitions.PO_Enc_Flow_Stepdef.validate_GrandTotal_Tax_for_PO_with_Encumbrance(PO_Enc_Flow_Stepdef.java:37)
+	at ✽.Then Validate GrandTotal & Tax for PO with Encumbrance(3_PO with Encumbrance Flow.feature:14)
+]]></failure>
+</testcase>
+</testsuite>

@@ -1,0 +1,66 @@
+package com.Sales_Modules;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.junit.Assert;
+
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+import com.Utils.ExcelWriter;
+import com.Utils.WebdriverWait;
+
+public class Sales_SalesOrder_View extends Base {
+
+	static List<HashMap<String, String>> SO_data = CrestTestDataReader.getSOData();
+	public static String so_Number;
+
+	public static void Capture_SONum() {
+
+		String SO_Num = WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']/div[1]/div[2]/table/tbody/tr[1]/td[2]/a")
+				.getText();
+		System.out.println("SO Number = " + SO_Num);
+		so_Number = SO_Num;
+		ExcelWriter.writeExcelFile("SO", 15, 3, SO_Num);
+
+	}
+
+	public static void SO_GrdTotal_Val() {
+
+		log.info("Validating GrandTotal");
+		String GrdTotal = WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']/div[6]/div[2]/table/tbody/tr[14]/td[3]/span")
+				.getText().replace("₹", "").replace(",", "");
+		System.out.println(GrdTotal);
+		System.out.println(SO_data.get(18).get("Dept"));
+		Assert.assertEquals(SO_data.get(18).get("Dept"), GrdTotal);
+		log.info("Grand Total & Tax Amt validated Successfully for SO Normal Flow");
+	}
+
+	public static void Approve_SO() {
+
+		log.info("Approve SO Normal Flow");
+
+		WebdriverWait.findElement("link", "Approve Order").click();
+		String App_Status_Val = WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']//div//table//tbody//tr[11]//td[2]").getText();
+		Assert.assertEquals("Approved", App_Status_Val);
+		log.info("Status validated successfully as Approved");
+	}
+
+	public static void SO_CaptureInvID() {
+
+		log.info("Capturing Invoice ID's for all the Shipments");
+		int j = 15;
+		for (int Inv = 1; Inv <= 4; Inv++) {
+
+			String InvID = WebdriverWait
+					.findElement("xpath", "//*[@id='content-main-section']//div//tr//td[6]//a[" + Inv + "]").getText();
+
+			ExcelWriter.writeExcelFile("SO", j, 5, InvID);
+			j++;
+		}
+	}
+
+}

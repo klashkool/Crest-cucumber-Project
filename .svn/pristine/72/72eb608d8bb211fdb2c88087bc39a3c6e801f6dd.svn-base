@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="1" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="5" time="340.341057">
+<testcase classname="PO with Inventory Flow" name="Create PO - PO Inv Flow" time="80.598126">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Create New PO - Start Order - PO Inv Flow.............................passed
+Then Add Shipping Details - PO Inv Flow.....................................passed
+Then Add Order Items - PO Inv Flow..........................................passed
+Then Review & Create PO - PO Inv Flow.......................................passed
+Then Validate GrandTotal & Tax - PO Inv Flow................................passed
+And Approve PO - PO Inv Flow................................................passed
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Receive PO - PO Inv Flow" time="85.458952">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Receive Inventory for all the facilities - PO Inv Flow................passed
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Approve &amp; Post all the Invoices - PO Inv Flow" time="55.43896">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Validate/Approve and Post all the Invoice ID - PO Inv Flow............passed
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Make Payments for all the Invoices - PO Inv Flow" time="41.006738">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Make payments for all the Invoices - PO Inv Flow......................passed
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Validate all the Inventories under Finance Module" time="77.838281">
+<failure message="org.junit.ComparisonFailure: expected:&lt;5[54986.23]&gt; but was:&lt;5[04145.64]&gt;&#13;&#10;&#9;at org.junit.Assert.assertEquals(Assert.java:115)&#13;&#10;&#9;at org.junit.Assert.assertEquals(Assert.java:144)&#13;&#10;&#9;at com.Financials_Modules.Financials_AcctTransaction_GLTransactionViewEntry.Acct_Trans_Val_InvoiceID(Financials_AcctTransaction_GLTransactionViewEntry.java:96)&#13;&#10;&#9;at com.Crest_Scenarios_StepDefinitions.PO_Inventory_Flow_Stepdef.validate_Accounting_transactions_with_InvoiceID_under_Finance_Module_PO_Inv_Flow(PO_Inventory_Flow_Stepdef.java:137)&#13;&#10;&#9;at ✽.Then Validate Accounting transactions with InvoiceID under Finance Module - PO Inv Flow(1_PO with Inventory Flow.feature:49)&#13;&#10;"><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Validate Accounting transactions with ShipmentID under Finance Module - PO Inv Flow.passed
+Then Validate Accounting transactions with InvoiceID under Finance Module - PO Inv Flow.failed
+Then Validate Accounting transactions with PaymentID under Finance Module - PO Inv Flow.skipped
+
+StackTrace:
+org.junit.ComparisonFailure: expected:<5[54986.23]> but was:<5[04145.64]>
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at com.Financials_Modules.Financials_AcctTransaction_GLTransactionViewEntry.Acct_Trans_Val_InvoiceID(Financials_AcctTransaction_GLTransactionViewEntry.java:96)
+	at com.Crest_Scenarios_StepDefinitions.PO_Inventory_Flow_Stepdef.validate_Accounting_transactions_with_InvoiceID_under_Finance_Module_PO_Inv_Flow(PO_Inventory_Flow_Stepdef.java:137)
+	at ✽.Then Validate Accounting transactions with InvoiceID under Finance Module - PO Inv Flow(1_PO with Inventory Flow.feature:49)
+]]></failure>
+</testcase>
+</testsuite>

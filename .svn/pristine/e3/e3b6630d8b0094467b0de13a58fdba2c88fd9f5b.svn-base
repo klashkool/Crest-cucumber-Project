@@ -1,0 +1,46 @@
+package com.AccountsPayable_Modules;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+import com.Utils.WebdriverWait;
+
+public class AP_PurchaseInvoices extends Base {
+
+	public static Logger log = Logger.getLogger(AP_PurchaseInvoices.class);
+	static List<HashMap<String, String>> PO_Inv_data = CrestTestDataReader.getPOInvData();
+
+	public static void InvoicePosting() {
+
+		log.info("Validating and Posting all the Invoice ID's");
+		int j = 14;
+		for (int Inv = 1; Inv <= 4; Inv++) {
+
+			WebdriverWait.findElement("link", "ACCOUNTS PAYABLE").click();
+			WebdriverWait.findElement("link", "Purchase Invoices").click();
+			WebdriverWait.findElement("id", "invoiceId").sendKeys(PO_Inv_data.get(j).get("Currency"));
+			WebdriverWait.findElement("xpath", "//*[@id='FindPurchaseInvoice']/table/tbody[1]/tr[7]/td/input").click();// Search
+																													// Button
+			WebdriverWait.findElement("xpath", "//*[@id='example']/tbody/tr/td[1]/a").click();// InvoiceID Link
+			WebdriverWait.findElement("id", "referenceNumber").sendKeys("1234");
+			WebdriverWait.findElement("link", "Update").click();
+			WebdriverWait.findElement("link", "Approve").click();
+			WebdriverWait.findElement("link", "Post").click();
+
+			String InvID_Status = WebdriverWait
+					.findElement("xpath", "//*[@id='content-main-section']/div[1]/div[2]/table/tbody[1]/tr[7]/td[2]")
+					.getText();
+			Assert.assertEquals("Posted", InvID_Status);
+			j++;
+		}
+
+		System.out.println("PO Invoice ID's Posted Successfully");
+
+	}
+
+}

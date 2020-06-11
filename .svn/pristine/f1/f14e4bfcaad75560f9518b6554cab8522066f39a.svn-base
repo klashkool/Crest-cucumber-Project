@@ -1,0 +1,122 @@
+$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("3_PO with Encumbrance Flow.feature");
+formatter.feature({
+  "line": 1,
+  "name": "PO with Encumbrance Flow",
+  "description": "",
+  "id": "po-with-encumbrance-flow",
+  "keyword": "Feature"
+});
+formatter.background({
+  "line": 3,
+  "name": "Login to the Application",
+  "description": "",
+  "type": "background",
+  "keyword": "Background"
+});
+formatter.step({
+  "line": 4,
+  "name": "Launch the Application",
+  "keyword": "Given "
+});
+formatter.step({
+  "line": 5,
+  "name": "Login with valid Credentials",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+});
+formatter.result({
+  "duration": 13016281800,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+});
+formatter.result({
+  "duration": 2188080300,
+  "status": "passed"
+});
+formatter.scenario({
+  "line": 9,
+  "name": "Create PO with Encumbrance",
+  "description": "",
+  "id": "po-with-encumbrance-flow;create-po-with-encumbrance",
+  "type": "scenario",
+  "keyword": "Scenario",
+  "tags": [
+    {
+      "line": 8,
+      "name": "@Test21"
+    }
+  ]
+});
+formatter.step({
+  "line": 11,
+  "name": "Create New PO with Encumbrance \u0026 Enter Organization \u0026 Supplier",
+  "keyword": "Given "
+});
+formatter.step({
+  "line": 12,
+  "name": "Add Ship Groups for PO with Encumbrance",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 13,
+  "name": "Add Products for PO with Encumbrance",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 14,
+  "name": "Validate GrandTotal \u0026 Tax for PO with Encumbrance",
+  "keyword": "Then "
+});
+formatter.step({
+  "line": 15,
+  "name": "Approve PO for PO with Encumbrance",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "PO_Enc_Flow_Stepdef.create_New_PO_with_Encumbrance_Enter_Organization_Supplier()"
+});
+formatter.result({
+  "duration": 10517673500,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Enc_Flow_Stepdef.add_Ship_Groups_for_PO_with_Encumbrance()"
+});
+formatter.result({
+  "duration": 2834610400,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Enc_Flow_Stepdef.add_Products_for_PO_with_Encumbrance()"
+});
+formatter.result({
+  "duration": 24411814500,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Enc_Flow_Stepdef.validate_GrandTotal_Tax_for_PO_with_Encumbrance()"
+});
+formatter.result({
+  "duration": 116797210700,
+  "error_message": "java.lang.IndexOutOfBoundsException: Index: 8, Size: 8\r\n\tat java.util.ArrayList.rangeCheck(Unknown Source)\r\n\tat java.util.ArrayList.get(Unknown Source)\r\n\tat com.Procurement_Modules.Procurement_PurchaseOrder.PO_Enc_GrdTotal_Val(Procurement_PurchaseOrder.java:470)\r\n\tat com.PO_Scenarios_StepDefinitions.PO_Enc_Flow_Stepdef.validate_GrandTotal_Tax_for_PO_with_Encumbrance(PO_Enc_Flow_Stepdef.java:37)\r\n\tat ✽.Then Validate GrandTotal \u0026 Tax for PO with Encumbrance(3_PO with Encumbrance Flow.feature:14)\r\n",
+  "status": "failed"
+});
+formatter.match({
+  "location": "PO_Enc_Flow_Stepdef.approve_PO_for_PO_with_Encumbrance()"
+});
+formatter.result({
+  "status": "skipped"
+});
+formatter.after({
+  "duration": 858434600,
+  "status": "passed"
+});
+formatter.after({
+  "duration": 2079000,
+  "status": "passed"
+});
+});

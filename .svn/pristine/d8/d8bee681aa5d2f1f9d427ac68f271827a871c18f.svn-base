@@ -1,0 +1,503 @@
+package com.Procurement_Modules;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+import com.Utils.ExcelReader;
+import com.Utils.ExcelWriter;
+import java.text.DateFormat;
+
+public class Procurement_PurchaseOrder extends Base {
+
+	public static Logger log = Logger.getLogger(Procurement_PurchaseOrder.class);
+	public static WebDriverWait wait = new WebDriverWait(driver, 100);
+	static List<HashMap<String, String>> PO_Inv_data = CrestTestDataReader.getPOInvData();
+	static List<HashMap<String, String>> PO_Inv_Adhoc_data = CrestTestDataReader.getPOInvAdhocData();
+	static List<HashMap<String, String>> PO_Enc_data = CrestTestDataReader.getPOEncData();
+
+	public static String po_Number;
+	public static String AdhocPo_Number;
+	public static String EncPo_Number;
+
+	public static void Start_Order() {
+
+		log.info("Creating a New PO");
+		driver.findElement(By.linkText("PROCUREMENT")).click();
+		driver.findElement(By.linkText("Purchase Order")).click();
+		driver.findElement(By.linkText("Create Purchase Order")).click();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("billToCustomerPartyId")));
+		Select Org_DD = new Select(driver.findElement(By.id("billToCustomerPartyId")));
+		// System.out.println("Organization :"+PO_Inv_data.get(0).get("Organization"));
+		Org_DD.selectByVisibleText(PO_Inv_data.get(0).get("Organization"));
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("supplierPartyId")));
+		Select Sup_DD = new Select(driver.findElement(By.id("supplierPartyId")));
+		Sup_DD.selectByVisibleText(PO_Inv_data.get(0).get("Supplier"));
+
+		driver.findElement(By.id("orderName")).sendKeys("PO Automation Inventory Flow");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("orderType")));
+		Select Ordtype_DD = new Select(driver.findElement(By.id("orderType")));
+		Ordtype_DD.selectByVisibleText("Normal");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("currencyUomId")));
+		Select Currency_DD = new Select(driver.findElement(By.id("currencyUomId")));
+		Currency_DD.selectByVisibleText(PO_Inv_data.get(0).get("Currency"));
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("numberingFormatId")));
+		Select NumType_DD = new Select(driver.findElement(By.id("numberingFormatId")));
+		NumType_DD.selectByVisibleText("Purchase Order");
+
+		driver.findElement(By.xpath("//*[@id='content-main-section']/form/div[3]/div[3]/a[1]")).click();
+	}
+
+	public static void Add_ShpGrps() {
+
+		log.info("Adding Ship Groups");
+		String facility = "_facilityId";
+
+		for (int a = 0; a <= 2; a++) {
+			Select Shpfacility = new Select(driver.findElement(By.id(a + facility)));
+			if (a == 0) {
+				Shpfacility.selectByVisibleText(PO_Inv_data.get(1).get("Facility-ShipGroup"));
+				driver.findElement(By.name("newShipGroup")).click();
+			} else if (a == 1) {
+				Shpfacility.selectByVisibleText(PO_Inv_data.get(6).get("Facility-ShipGroup"));
+				driver.findElement(By.name("newShipGroup")).click();
+			} else if (a == 2) {
+				Shpfacility.selectByVisibleText(PO_Inv_data.get(9).get("Facility-ShipGroup"));
+			}
+		}
+		driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/div/a[1]")).click();
+	}
+
+	public static void Add_Prd() {
+
+		log.info("Adding products");
+		for (int p = 0; p <= 9; p++) {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("addItemType")));
+			Select OrdType_DD = new Select(driver.findElement(By.id("addItemType")));
+			OrdType_DD.selectByVisibleText(PO_Inv_data.get(0).get("OrderType"));
+
+			driver.findElement(By.name("add_product_id")).sendKeys(PO_Inv_data.get(p).get("Product ID"));
+			driver.findElement(By.name("quantity")).sendKeys(PO_Inv_data.get(p).get("Qty"));
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("quantityUomId")));
+			Select UOM_DD = new Select(driver.findElement(By.id("quantityUomId")));
+			UOM_DD.selectByVisibleText(PO_Inv_data.get(p).get("UOM"));
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("departmentName")));
+			Select Dept_DD = new Select(driver.findElement(By.id("departmentName")));
+			Dept_DD.selectByVisibleText(PO_Inv_data.get(p).get("Dept"));
+
+			driver.findElement(By.name("itemComment")).sendKeys("Test");
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("toGroupIndex")));
+			Select Fac_DD = new Select(driver.findElement(By.id("toGroupIndex")));
+
+			if (p <= 4) {
+				Fac_DD.selectByVisibleText(PO_Inv_data.get(0).get("Facility-ShipGroup"));
+			} else if (p >= 5 && p <= 7) {
+				Fac_DD.selectByVisibleText(PO_Inv_data.get(5).get("Facility-ShipGroup"));
+			} else if (p >= 8 && p <= 9) {
+				Fac_DD.selectByVisibleText(PO_Inv_data.get(8).get("Facility-ShipGroup"));
+			}
+			driver.findElement(By.name("submitItems")).click();
+		}
+		driver.findElement(By.linkText("Continue")).click();
+		driver.findElement(By.linkText("Create")).click();
+		log.info("PO Number Created Successfully");
+
+		String PO_Num = driver
+				.findElement(By.xpath("//*[@id='content-main-section']/div[1]/div[2]/table/tbody/tr[1]/td[2]/a"))
+				.getText();
+		System.out.println("PO Number = " + PO_Num);
+		po_Number = PO_Num;
+		ExcelWriter.writeExcelFile("PO_Inv", 15, 3, PO_Num);
+
+	}
+
+	public static void GrdTotal_Val() {
+
+		log.info("Validating GrandTotal");
+		String GrdTotal = driver
+				.findElement(By.xpath("//*[@id='content-main-section']/div[6]/div[2]/table/tbody/tr[14]/td[3]/span"))
+				.getText().replace("₹", "").replace(",", "");
+		System.out.println(GrdTotal);
+		System.out.println(PO_Inv_data.get(18).get("Dept"));
+		Assert.assertEquals(PO_Inv_data.get(18).get("Dept"), GrdTotal);
+		log.info("Grand Total & Tax Amt validated Successfully");
+	}
+
+	public static void Approve_Po() {
+
+		log.info("Approve PO for Inv");
+		driver.findElement(By.linkText("Review Order")).click();
+		driver.findElement(By.linkText("Review 2 Order")).click();
+		driver.findElement(By.linkText("Approve Order")).click();
+		String App_Status_Val = driver
+				.findElement(By.xpath("//*[@id='content-main-section']/div[1]/div[2]/table/tbody/tr[5]/td[2]"))
+				.getText();
+		Assert.assertEquals("Approved", App_Status_Val);
+		log.info("Status validated successfully as Approved");
+
+	}
+
+//************************************************************************************************************************************************//
+	// PO With Adhoc Flow
+//************************************************************************************************************************************************//	
+
+	public static void PO_Adhoc_Start_Order() {
+
+		log.info("Creating a New PO for PO Adhoc Flow");
+		driver.findElement(By.linkText("PROCUREMENT")).click();
+		driver.findElement(By.linkText("Purchase Order")).click();
+		driver.findElement(By.linkText("Create Purchase Order")).click();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("billToCustomerPartyId")));
+		Select Org_DD = new Select(driver.findElement(By.id("billToCustomerPartyId")));
+		// System.out.println("Organization :"+PO_Inv_data.get(0).get("Organization"));
+		Org_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(0).get("Organization"));
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("supplierPartyId")));
+		Select Sup_DD = new Select(driver.findElement(By.id("supplierPartyId")));
+		Sup_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(0).get("Supplier"));
+
+		driver.findElement(By.id("orderName")).sendKeys("PO Automation Inv & Adhoc Flow");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("orderType")));
+		Select Ordtype_DD = new Select(driver.findElement(By.id("orderType")));
+		Ordtype_DD.selectByVisibleText("Normal");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("currencyUomId")));
+		Select Currency_DD = new Select(driver.findElement(By.id("currencyUomId")));
+		Currency_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(0).get("Currency"));
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("numberingFormatId")));
+		Select NumType_DD = new Select(driver.findElement(By.id("numberingFormatId")));
+		NumType_DD.selectByVisibleText("Purchase Order");
+
+		driver.findElement(By.xpath("//*[@id='content-main-section']/form/div[3]/div[3]/a[1]")).click();
+	}
+
+	public static void PO_Adhoc_Add_ShpGrps() {
+
+		log.info("Adding Ship Groups for PO Adhoc Flow");
+		String facility = "_facilityId";
+
+		for (int a = 0; a <= 2; a++) {
+			Select Shpfacility = new Select(driver.findElement(By.id(a + facility)));
+			if (a == 0) {
+				Shpfacility.selectByVisibleText(PO_Inv_Adhoc_data.get(1).get("Facility-ShipGroup"));
+				System.out.println(PO_Inv_Adhoc_data.get(1).get("Facility-ShipGroup"));
+				driver.findElement(By.name("newShipGroup")).click();
+			} else if (a == 1) {
+				Shpfacility.selectByVisibleText(PO_Inv_Adhoc_data.get(5).get("Facility-ShipGroup"));
+				System.out.println(PO_Inv_Adhoc_data.get(5).get("Facility-ShipGroup"));
+				driver.findElement(By.name("newShipGroup")).click();
+			} else if (a == 2) {
+				Shpfacility.selectByVisibleText(PO_Inv_Adhoc_data.get(8).get("Facility-ShipGroup"));
+				System.out.println(PO_Inv_Adhoc_data.get(8).get("Facility-ShipGroup"));
+			}
+		}
+		driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/div/a[1]")).click();
+	}
+
+	public static void PO_Adhoc_Add_Prd() throws InterruptedException {
+
+		log.info("Adding Inv products & Adhoc Products");
+		for (int p = 0; p <= 8; p++) {
+
+			if (p <= 3) {
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("addItemType")));
+				Select OrdType_DD = new Select(driver.findElement(By.id("addItemType")));
+				OrdType_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(p).get("OrderType"));
+
+				Thread.sleep(1000);
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("add_product_id")));
+				driver.findElement(By.name("add_product_id")).sendKeys(PO_Inv_Adhoc_data.get(p).get("Product ID"));
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("quantity")));
+				driver.findElement(By.name("quantity")).sendKeys(PO_Inv_Adhoc_data.get(p).get("Qty"));
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("quantityUomId")));
+				Select UOM_DD = new Select(driver.findElement(By.id("quantityUomId")));
+				UOM_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(p).get("UOM"));
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("departmentName")));
+				Select Dept_DD = new Select(driver.findElement(By.id("departmentName")));
+				Dept_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(p).get("Dept"));
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("itemComment")));
+				driver.findElement(By.name("itemComment")).sendKeys("Test");
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("toGroupIndex")));
+				Select Fac_DD = new Select(driver.findElement(By.id("toGroupIndex")));
+				Fac_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(0).get("Facility-ShipGroup"));
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("submitItems")));
+				driver.findElement(By.name("submitItems")).click();
+
+			} else if (p >= 4 && p <= 6) {
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("addItemType")));
+				Select OrdType_DD = new Select(driver.findElement(By.id("addItemType")));
+				OrdType_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(p).get("OrderType"));
+
+				Thread.sleep(2000);
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("add_item_description")));
+				driver.findElement(By.name("add_item_description"))
+						.sendKeys(PO_Inv_Adhoc_data.get(p).get("Product ID"));
+				wait.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[@id='adHoc']/table/tbody/tr[2]/td[2]/input")));
+				driver.findElement(By.xpath("//*[@id='adHoc']/table/tbody/tr[2]/td[2]/input"))
+						.sendKeys(PO_Inv_Adhoc_data.get(p).get("Qty"));
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("price")));
+				driver.findElement(By.name("price")).sendKeys(PO_Inv_Adhoc_data.get(p).get("Purchase Price"));
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("gstCategoryId")));
+				Select TaxCat_DD = new Select(driver.findElement(By.id("gstCategoryId")));
+				TaxCat_DD.selectByVisibleText("GST 5%");
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("departmentName1")));
+				Select Dept_DD = new Select(driver.findElement(By.id("departmentName1")));
+				Dept_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(p).get("Dept"));
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
+						"/html/body/div[2]/div[4]/div/div[1]/div[2]/div[2]/form[2]/div/table/tbody/tr[4]/td[4]/select")));
+				Select Fac_DD = new Select(driver.findElement(By.xpath(
+						"/html/body/div[2]/div[4]/div/div[1]/div[2]/div[2]/form[2]/div/table/tbody/tr[4]/td[4]/select")));
+				Fac_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(4).get("Facility-ShipGroup"));
+
+				wait.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[@id='adHoc']/table/tbody/tr[6]/td[2]/input")));
+				driver.findElement(By.xpath("//*[@id='adHoc']/table/tbody/tr[6]/td[2]/input")).click();
+
+			} else if (p >= 7 && p <= 8) {
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("addItemType")));
+				Select OrdType_DD = new Select(driver.findElement(By.id("addItemType")));
+				OrdType_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(p).get("OrderType"));
+
+				Thread.sleep(2000);
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("add_item_description")));
+				driver.findElement(By.name("add_item_description"))
+						.sendKeys(PO_Inv_Adhoc_data.get(p).get("Product ID"));
+				wait.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[@id='adHoc']/table/tbody/tr[2]/td[2]/input")));
+				driver.findElement(By.xpath("//*[@id='adHoc']/table/tbody/tr[2]/td[2]/input"))
+						.sendKeys(PO_Inv_Adhoc_data.get(p).get("Qty"));
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("price")));
+				driver.findElement(By.name("price")).sendKeys(PO_Inv_Adhoc_data.get(p).get("Purchase Price"));
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("gstCategoryId")));
+				Select TaxCat_DD = new Select(driver.findElement(By.id("gstCategoryId")));
+				TaxCat_DD.selectByVisibleText("GST 18%");
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("departmentName1")));
+				Select Dept_DD = new Select(driver.findElement(By.id("departmentName1")));
+				Dept_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(p).get("Dept"));
+
+				wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(
+						"/html/body/div[2]/div[4]/div/div[1]/div[2]/div[2]/form[2]/div/table/tbody/tr[4]/td[4]/select")));
+				Select Fac_DD = new Select(driver.findElement(By.xpath(
+						"/html/body/div[2]/div[4]/div/div[1]/div[2]/div[2]/form[2]/div/table/tbody/tr[4]/td[4]/select")));
+				Fac_DD.selectByVisibleText(PO_Inv_Adhoc_data.get(7).get("Facility-ShipGroup"));
+
+				wait.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[@id='adHoc']/table/tbody/tr[6]/td[2]/input")));
+				driver.findElement(By.xpath("//*[@id='adHoc']/table/tbody/tr[6]/td[2]/input")).click();
+			}
+		}
+		driver.findElement(By.linkText("Continue")).click();
+		driver.findElement(By.linkText("Create")).click();
+		log.info("PO Number Created Successfully");
+
+		String AdhocPO_Num = driver
+				.findElement(By.xpath("//*[@id='content-main-section']/div[1]/div[2]/table/tbody/tr[1]/td[2]/a"))
+				.getText();
+		System.out.println("Adhoc PO Number = " + AdhocPO_Num);
+		AdhocPo_Number = AdhocPO_Num;
+		ExcelWriter.writeExcelFile("PO_Adhoc", 14, 3, AdhocPO_Num);
+
+	}
+
+	public static void PO_Adhoc_GrdTotal_Val() {
+
+		log.info("Validating GrandTotal");
+		String PO_AdhocGrdTotal = driver
+				.findElement(By.xpath("//*[@id='content-main-section']/div[6]/div[2]/table/tbody/tr[13]/td[3]/span"))
+				.getText().replace("₹", "").replace(",", "");
+		System.out.println(PO_AdhocGrdTotal);
+		System.out.println(PO_Inv_Adhoc_data.get(16).get("Dept"));
+		Assert.assertEquals(PO_Inv_Adhoc_data.get(16).get("Dept"), PO_AdhocGrdTotal);
+		log.info("Grand Total & Tax Amt validated Successfully for PO Adhoc Flow");
+	}
+
+	public static void Po_Adhoc_Approve_Po() {
+
+		log.info("Approve PO for Adhoc");
+		driver.findElement(By.linkText("Review Order")).click();
+		driver.findElement(By.linkText("Review 2 Order")).click();
+		driver.findElement(By.linkText("Approve Order")).click();
+		String App_Status_Val = driver
+				.findElement(By.xpath("//*[@id='content-main-section']/div[1]/div[2]/table/tbody/tr[5]/td[2]"))
+				.getText();
+		Assert.assertEquals("Approved", App_Status_Val);
+		log.info("Status validated successfully as Approved");
+
+	}
+
+//************************************************************************************************************************************************//
+	// PO With Encumbrance Flow
+//************************************************************************************************************************************************//	
+
+	public static void PO_Enc_Start_Order() {
+
+		log.info("Creating a New PO Encumbrance Flow");
+		driver.findElement(By.linkText("PROCUREMENT")).click();
+		driver.findElement(By.linkText("Purchase Order")).click();
+		driver.findElement(By.linkText("Create Purchase Order")).click();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("billToCustomerPartyId")));
+		Select Org_DD = new Select(driver.findElement(By.id("billToCustomerPartyId")));
+		Org_DD.selectByVisibleText(PO_Enc_data.get(0).get("Organization"));
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("supplierPartyId")));
+		Select Sup_DD = new Select(driver.findElement(By.id("supplierPartyId")));
+		Sup_DD.selectByVisibleText(PO_Enc_data.get(0).get("Supplier"));
+
+		driver.findElement(By.id("orderName")).sendKeys("PO Automation Encumbrance Flow");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("orderType")));
+		Select Ordtype_DD = new Select(driver.findElement(By.id("orderType")));
+		Ordtype_DD.selectByVisibleText("Encumbrance");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("currencyUomId")));
+		Select Currency_DD = new Select(driver.findElement(By.id("currencyUomId")));
+		Currency_DD.selectByVisibleText(PO_Enc_data.get(0).get("Currency"));
+
+		// Adding Current Date(From Date)
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String Fromdate = (dateFormat.format(new Date()));
+		driver.findElement(By.name("fromDate_i18n")).sendKeys(Fromdate);
+
+		// Adding 10days extra from Current Date(ToDate)
+		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.DATE, 10);
+		String newDate = dateFormat.format(cal.getTime());
+		driver.findElement(By.id("thruDate_i18n")).sendKeys(newDate);
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("numberingFormatId")));
+		Select NumType_DD = new Select(driver.findElement(By.id("numberingFormatId")));
+		NumType_DD.selectByVisibleText("Purchase Order");
+
+		driver.findElement(By.xpath("//*[@id='content-main-section']/form/div[3]/div[3]/a[1]")).click();
+	}
+
+	public static void PO_Enc_Add_ShpGrps() {
+
+		log.info("Adding Ship Groups for PO Encumbrance Flow");
+		String facility = "_facilityId";
+
+		for (int a = 0; a <= 1; a++) {
+			Select Shpfacility = new Select(driver.findElement(By.id(a + facility)));
+			if (a == 0) {
+				Shpfacility.selectByVisibleText(PO_Enc_data.get(1).get("Facility-ShipGroup"));
+				System.out.println(PO_Enc_data.get(1).get("Facility-ShipGroup"));
+				driver.findElement(By.name("newShipGroup")).click();
+			} else if (a == 1) {
+				Shpfacility.selectByVisibleText(PO_Enc_data.get(3).get("Facility-ShipGroup"));
+				System.out.println(PO_Enc_data.get(3).get("Facility-ShipGroup"));
+			}
+		}
+		driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/div/a[1]")).click();
+	}
+
+	public static void PO_Enc_Add_Prd() throws InterruptedException {
+
+		for (int p = 0; p <= 3; p++) {
+			log.info("Adding Products for Encumbrance Order");
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("addItemType")));
+			Select OrdType_DD = new Select(driver.findElement(By.id("addItemType")));
+			OrdType_DD.selectByVisibleText(PO_Enc_data.get(0).get("OrderType"));
+
+			Thread.sleep(1000);
+			driver.findElement(By.name("add_product_id")).sendKeys(PO_Enc_data.get(p).get("Product ID"));
+			driver.findElement(By.name("quantity")).sendKeys(PO_Enc_data.get(p).get("Qty"));
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("quantityUomId")));
+			Select UOM_DD = new Select(driver.findElement(By.id("quantityUomId")));
+			UOM_DD.selectByVisibleText(PO_Enc_data.get(p).get("UOM"));
+
+			Thread.sleep(1000);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("departmentName")));
+			Select Dept_DD = new Select(driver.findElement(By.id("departmentName")));
+			Dept_DD.selectByVisibleText(PO_Enc_data.get(p).get("Dept"));
+
+			driver.findElement(By.name("itemComment")).sendKeys("Test");
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("toGroupIndex")));
+			Select Fac_DD = new Select(driver.findElement(By.id("toGroupIndex")));
+
+			if (p <= 1) {
+				Fac_DD.selectByVisibleText(PO_Enc_data.get(0).get("Facility-ShipGroup"));
+			} else {
+				Fac_DD.selectByVisibleText(PO_Enc_data.get(2).get("Facility-ShipGroup"));
+			}
+			driver.findElement(By.name("submitItems")).click();
+		}
+		driver.findElement(By.linkText("Continue")).click();
+		driver.findElement(By.linkText("Create")).click();
+		log.info("PO Number Created Successfully");
+
+		String Enc_PO_Num = driver
+				.findElement(By.xpath("//*[@id='content-main-section']/div[1]/div[2]/table/tbody/tr[1]/td[2]/a"))
+				.getText();
+		System.out.println("PO Number = " + Enc_PO_Num);
+		EncPo_Number = Enc_PO_Num;
+		ExcelWriter.writeExcelFile("PO_Enc", 8, 0, Enc_PO_Num);
+	}
+
+	public static void PO_Enc_GrdTotal_Val() {
+
+		log.info("Validating GrandTotal");
+		String PO_EncGrdTotal = driver
+				.findElement(By.xpath("//*[@id='content-main-section']/div[6]/div[2]/table/tbody/tr[8]/td[3]/span"))
+				.getText().replace("₹", "").replace(",", "");
+		System.out.println(PO_EncGrdTotal);
+		System.out.println(PO_Enc_data.get(7).get("Product ID"));
+		Assert.assertEquals(PO_Enc_data.get(7).get("Product ID"), PO_EncGrdTotal);
+		log.info("Grand Total & Tax Amt validated Successfully for PO Encumbrance Flow");
+	}
+
+	public static void Po_Enc_Approve_Po() {
+
+		log.info("Approve PO for Encumbrance");
+		driver.findElement(By.linkText("Review Order")).click();
+		driver.findElement(By.linkText("Review 2 Order")).click();
+		driver.findElement(By.linkText("Approve Order")).click();
+		String App_Status_Val = driver
+				.findElement(By.xpath("//*[@id='content-main-section']/div[1]/div[2]/table/tbody/tr[5]/td[2]"))
+				.getText();
+		Assert.assertEquals("Approved", App_Status_Val);
+		log.info("Status validated successfully as Approved");
+
+	}
+
+}

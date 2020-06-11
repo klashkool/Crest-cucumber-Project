@@ -1,0 +1,9 @@
+package com.Sales_Modules;
+
+import com.Utils.Base;
+
+public class Sales_Quotes extends Base {
+
+	
+	
+}

@@ -1,0 +1,81 @@
+$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("4_SO Flow.feature");
+formatter.feature({
+  "line": 1,
+  "name": "SO Flow",
+  "description": "",
+  "id": "so-flow",
+  "keyword": "Feature"
+});
+formatter.background({
+  "line": 3,
+  "name": "Login to the Application",
+  "description": "",
+  "type": "background",
+  "keyword": "Background"
+});
+formatter.step({
+  "line": 4,
+  "name": "Launch the Application",
+  "keyword": "Given "
+});
+formatter.step({
+  "line": 5,
+  "name": "Login with valid Credentials",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+});
+formatter.result({
+  "duration": 29400677400,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+});
+formatter.result({
+  "duration": 27094701100,
+  "status": "passed"
+});
+formatter.scenario({
+  "line": 13,
+  "name": "Create SO Normal Flow",
+  "description": "",
+  "id": "so-flow;create-so-normal-flow",
+  "type": "scenario",
+  "keyword": "Scenario",
+  "tags": [
+    {
+      "line": 12,
+      "name": "@Test32"
+    }
+  ]
+});
+formatter.step({
+  "line": 15,
+  "name": "Create New SO",
+  "keyword": "Given "
+});
+formatter.step({
+  "line": 16,
+  "name": "Add Shipping Details",
+  "keyword": "Then "
+});
+formatter.step({
+  "line": 17,
+  "name": "Add Order Items",
+  "keyword": "Then "
+});
+formatter.step({
+  "line": 18,
+  "name": "Validate GrandTotal \u0026 Tax for SO",
+  "keyword": "Then "
+});
+formatter.step({
+  "line": 19,
+  "name": "Approve SO",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "SO_Normal_Flow_Stepdef.create_New_SO()"
+});

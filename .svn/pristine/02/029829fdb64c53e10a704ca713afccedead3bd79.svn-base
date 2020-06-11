@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="3" time="194.999567">
+<testcase classname="SO Flow" name="Create SO Normal Flow" time="86.873775">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Create New SO.........................................................passed
+Then Add Shipping Details...................................................passed
+Then Add Order Items........................................................passed
+Then Validate GrandTotal & Tax for SO.......................................passed
+And Approve SO..............................................................passed
+]]></system-out>
+</testcase>
+<testcase classname="SO Flow" name="Create Shipment" time="71.243365">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Create Shipment for all the facilities................................passed
+]]></system-out>
+</testcase>
+<testcase classname="SO Flow" name="Approve &amp; Post all the Invoices and Make Payments" time="36.882427">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Validate/Approve and Post all the Invoice ID for SO...................passed
+Then Validate all the Shipments under Finance Module........................passed
+And Make Payments for all the Invoice ID for SO.............................passed
+]]></system-out>
+</testcase>
+</testsuite>

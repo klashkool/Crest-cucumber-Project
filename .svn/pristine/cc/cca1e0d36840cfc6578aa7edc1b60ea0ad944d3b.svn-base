@@ -1,0 +1,16 @@
+package com.Facilities_Modules;
+
+import org.junit.Assert;
+
+import com.Utils.Base;
+import com.Utils.WebdriverWait;
+
+public class Facilities_Shipments_View extends Base {
+
+	public static void Shpmnt_Status_Val() {
+
+		String Ship_status = WebdriverWait.findElement("xpath", "//*[@id='content-main-section']//tr//td[4]").getText();
+		Assert.assertEquals("Shipped", Ship_status);
+	}
+
+}

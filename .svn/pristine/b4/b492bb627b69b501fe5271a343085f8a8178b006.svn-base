@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="2" time="109.027223">
+<testcase classname="PO with Inv &amp; Adhoc Flow" name="Create PO with Inventory &amp; Adhoc" time="81.505922">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Create New PO Inv with Adhoc & Enter Organization & Supplier..........passed
+And Add Ship Groups for PO Inv with Adhoc...................................passed
+And Add Products for PO Inv with Adhoc......................................passed
+Then Validate GrandTotal & Tax for PO Inv with Adhoc........................passed
+And Approve PO Inv with Adhoc...............................................passed
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inv &amp; Adhoc Flow" name="Receive Inventory for Inv &amp; Adhoc" time="27.521301">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Receive Inventory Products............................................passed
+Then Receive Adhoc Products.................................................passed
+]]></system-out>
+</testcase>
+</testsuite>

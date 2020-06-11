@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="1" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="2" time="230.064416">
+<testcase classname="PO with TDS Flow" name="Receive PO - PO TDS Flow" time="186.250741">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Receive Inventory for all the facilities - PO TDS Flow................passed
+]]></system-out>
+</testcase>
+<testcase classname="PO with TDS Flow" name="Approve &amp; Post all the Invoices - PO TDS Flow" time="43.813675">
+<failure message="org.openqa.selenium.UnhandledAlertException: unexpected alert open: {Alert text : Supplier is an Unregisterged Party, Hence RCM will be calculated. Are you sure you want to continue ?}&#10;  (Session info: chrome=83.0.4103.97): Supplier is an Unregisterged Party, Hence RCM will be calculated. Are you sure you want to continue ?&#10;Build info: version: '3.5.3', revision: 'a88d25fe6b', time: '2017-08-29T12:42:44.417Z'&#10;System info: host: 'KAILASH_R_LAPTO', ip: '192.168.1.101', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_201'&#10;Driver info: org.openqa.selenium.chrome.ChromeDriver&#10;Capabilities [{networkConnectionEnabled=false, chrome={chromedriverVersion=83.0.4103.39 (ccbf011cb2d2b19b506d844400483861342c20cd-refs/branch-heads/4103@{#416}), userDataDir=C:\Users\KailashR\AppData\Local\Temp\scoped_dir7512_687503680}, timeouts={implicit=0, pageLoad=300000, script=30000}, pageLoadStrategy=normal, unhandledPromptBehavior=dismiss and notify, strictFileInteractability=false, platform=XP, proxy=Proxy(), goog:chromeOptions={debuggerAddress=localhost:54936}, acceptInsecureCerts=false, browserVersion=83.0.4103.97, browserName=chrome, javascriptEnabled=true, platformName=XP, setWindowRect=true, webauthn:virtualAuthenticators=true}]&#10;Session ID: 3de7719155965a98601412988c4c2afe&#10;*** Element info: {Using=xpath, value=//*[@id='content-main-section']/div[1]/div[2]/table/tbody[1]/tr[7]/td[2]}&#13;&#10;&#9;at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:118)&#13;&#10;&#9;at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)&#13;&#10;&#9;at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:164)&#13;&#10;&#9;at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:82)&#13;&#10;&#9;at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:646)&#13;&#10;&#9;at org.openqa.selenium.remote.RemoteWebDriver.findElements(RemoteWebDriver.java:443)&#13;&#10;&#9;at org.openqa.selenium.remote.RemoteWebDriver.findElementsByXPath(RemoteWebDriver.java:522)&#13;&#10;&#9;at org.openqa.selenium.By$ByXPath.findElements(By.java:356)&#13;&#10;&#9;at org.openqa.selenium.remote.RemoteWebDriver.findElements(RemoteWebDriver.java:404)&#13;&#10;&#9;at org.openqa.selenium.support.ui.ExpectedConditions.findElement(ExpectedConditions.java:882)&#13;&#10;&#9;at org.openqa.selenium.support.ui.ExpectedConditions.access$000(ExpectedConditions.java:44)&#13;&#10;&#9;at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:206)&#13;&#10;&#9;at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:202)&#13;&#10;&#9;at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:209)&#13;&#10;&#9;at com.Utils.WebdriverWait.findElement(WebdriverWait.java:25)&#13;&#10;&#9;at com.AccountsPayable_Modules.AP_PurchaseInvoices_Overview.PI_Post(AP_PurchaseInvoices_Overview.java:15)&#13;&#10;&#9;at com.AccountsPayable_Modules.AP_PurchaseInvoices.InvoicePosting(AP_PurchaseInvoices.java:28)&#13;&#10;&#9;at com.Crest_Scenarios_StepDefinitions.PO_TDS_Flow_Stepdef.validate_Approve_and_Post_all_the_Invoice_ID_PO_TDS_Flow(PO_TDS_Flow_Stepdef.java:66)&#13;&#10;&#9;at ✽.Given Validate/Approve and Post all the Invoice ID - PO TDS Flow(PO with TDS Flow.feature:26)&#13;&#10;"><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Validate/Approve and Post all the Invoice ID - PO TDS Flow............failed
+
+StackTrace:
+org.openqa.selenium.UnhandledAlertException: unexpected alert open: {Alert text : Supplier is an Unregisterged Party, Hence RCM will be calculated. Are you sure you want to continue ?}
+  (Session info: chrome=83.0.4103.97): Supplier is an Unregisterged Party, Hence RCM will be calculated. Are you sure you want to continue ?
+Build info: version: '3.5.3', revision: 'a88d25fe6b', time: '2017-08-29T12:42:44.417Z'
+System info: host: 'KAILASH_R_LAPTO', ip: '192.168.1.101', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_201'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{networkConnectionEnabled=false, chrome={chromedriverVersion=83.0.4103.39 (ccbf011cb2d2b19b506d844400483861342c20cd-refs/branch-heads/4103@{#416}), userDataDir=C:\Users\KailashR\AppData\Local\Temp\scoped_dir7512_687503680}, timeouts={implicit=0, pageLoad=300000, script=30000}, pageLoadStrategy=normal, unhandledPromptBehavior=dismiss and notify, strictFileInteractability=false, platform=XP, proxy=Proxy(), goog:chromeOptions={debuggerAddress=localhost:54936}, acceptInsecureCerts=false, browserVersion=83.0.4103.97, browserName=chrome, javascriptEnabled=true, platformName=XP, setWindowRect=true, webauthn:virtualAuthenticators=true}]
+Session ID: 3de7719155965a98601412988c4c2afe
+*** Element info: {Using=xpath, value=//*[@id='content-main-section']/div[1]/div[2]/table/tbody[1]/tr[7]/td[2]}
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:118)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:164)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:82)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:646)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElements(RemoteWebDriver.java:443)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementsByXPath(RemoteWebDriver.java:522)
+	at org.openqa.selenium.By$ByXPath.findElements(By.java:356)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElements(RemoteWebDriver.java:404)
+	at org.openqa.selenium.support.ui.ExpectedConditions.findElement(ExpectedConditions.java:882)
+	at org.openqa.selenium.support.ui.ExpectedConditions.access$000(ExpectedConditions.java:44)
+	at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:206)
+	at org.openqa.selenium.support.ui.ExpectedConditions$7.apply(ExpectedConditions.java:202)
+	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:209)
+	at com.Utils.WebdriverWait.findElement(WebdriverWait.java:25)
+	at com.AccountsPayable_Modules.AP_PurchaseInvoices_Overview.PI_Post(AP_PurchaseInvoices_Overview.java:15)
+	at com.AccountsPayable_Modules.AP_PurchaseInvoices.InvoicePosting(AP_PurchaseInvoices.java:28)
+	at com.Crest_Scenarios_StepDefinitions.PO_TDS_Flow_Stepdef.validate_Approve_and_Post_all_the_Invoice_ID_PO_TDS_Flow(PO_TDS_Flow_Stepdef.java:66)
+	at ✽.Given Validate/Approve and Post all the Invoice ID - PO TDS Flow(PO with TDS Flow.feature:26)
+]]></failure>
+</testcase>
+</testsuite>

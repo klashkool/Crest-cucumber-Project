@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="1" time="28.55949">
+<testcase classname="PO with Inventory Flow" name="Create Purchase Return" time="28.55949">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Create PO Return......................................................passed
+]]></system-out>
+</testcase>
+</testsuite>

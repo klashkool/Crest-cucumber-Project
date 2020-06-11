@@ -1,0 +1,118 @@
+package com.AccountsPayable_Modules;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+import com.Utils.ExcelWriter;
+import com.Utils.WebdriverWait;
+
+public class AP_Payments extends Base {
+
+	public static Logger log = Logger.getLogger(AP_Payments.class);
+	static List<HashMap<String, String>> PO_Inv_data = CrestTestDataReader.getPOInvData();
+
+	public static void Payments() throws InterruptedException {
+
+		log.info("Making Payments for all the Invoice ID");
+		WebdriverWait.findElement("link", "ACCOUNTS PAYABLE").click();
+		WebdriverWait.findElement("xpath", "//*[@id='app-navigation']//li[4]//a").click();// Payments link
+		WebdriverWait.findElement("xpath", "//*[@id='searchContainer']//a").click();// Create Payments
+
+		// Organization Dropdown
+		Select Org_DD = new Select(WebdriverWait.findElement("id", "partyIdFrom"));
+		Org_DD.selectByVisibleText(PO_Inv_data.get(0).get("Organization"));
+
+		// Payment Type Dropdown
+		Select Paytype_DD = new Select(WebdriverWait.findElement("id", "paymentTypeId"));
+		Paytype_DD.selectByVisibleText("Vendor Payment");
+
+		// PartyID
+		WebdriverWait.findElement("name", "partyIdTo").sendKeys("10020");// MetalShop
+
+		// Account Dropdown
+		Select Acct_DD = new Select(WebdriverWait.findElement("id", "paymentMethodId"));
+		Acct_DD.selectByVisibleText("ICICI-2960");
+
+		// Payment Method
+		Select Paymethd_DD = new Select(WebdriverWait.findElement("id", "paymentMethod"));
+		Paymethd_DD.selectByVisibleText("Cash");
+
+		// Numbering Type
+		Select NumType_DD = new Select(WebdriverWait.findElement("id", "numberingFormatId"));
+		NumType_DD.selectByVisibleText("Payables Pay");
+
+		// Currency
+		Select Cur_DD = new Select(WebdriverWait.findElement("id", "currencyUomId"));
+		Cur_DD.selectByVisibleText("INR");
+
+		WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']/div/div[2]/form/table/tbody[1]/tr[8]/td/input")
+				.click();
+
+		String PayID = WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']/div/div[2]/form/table/tbody[1]/tr[1]/td[2]")
+				.getText();
+		ExcelWriter.writeExcelFile("PO_Inv", 15, 7, PayID);
+
+		WebdriverWait.findElement("xpath", "/html/body/div[2]/div[4]/div[1]/ul/li/ul/li[3]/a").click();// Application
+																										// Link
+		ArrayList<String> Invlist = new ArrayList<String>();
+
+		for (int j = 14; j <= 17; j++) {
+			Invlist.add(PO_Inv_data.get(j).get("Currency"));
+		}
+		System.out.println(Invlist);
+
+		List<WebElement> Inv_Pay_tble = WebdriverWait.findElements("xpath",
+				"//*[@id='createPaymentApplication']/table/tbody/tr");
+		String totalTabletext = null;
+		int count = 0;
+		for (int y = 2; y <= Inv_Pay_tble.size(); y++) {
+			String before_xpath = "//*[@id='createPaymentApplication']/table/tbody/tr[";
+			String after_xpath = "]/td";
+			if (count >= 4) {
+				break;
+			}
+			totalTabletext = WebdriverWait.findElement("xpath", before_xpath + y + after_xpath).getText();
+			System.out.println(totalTabletext);
+			if (Invlist.contains(totalTabletext)) {
+				String before_xpath1 = "//*[@id='createPaymentApplication']/table/tbody/tr[";
+				String after_xpath1 = "]/td[8]/input";
+				WebdriverWait.findElement("xpath", before_xpath1 + y + after_xpath1).click();
+				Thread.sleep(2000);
+				count++;
+			}
+		}
+		WebdriverWait.findElement("xpath", "//*[@id='createPaymentApplication']/div/input").click();
+		WebdriverWait.findElement("link", "Sent").click();
+		WebdriverWait.findElement("link", "Confirm").click();
+
+		String Pymt_Status = WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']/div[1]/div[2]/table/tbody[1]/tr[1]/td[4]")
+				.getText();
+		Assert.assertEquals("Confirmed", Pymt_Status);
+
+		WebdriverWait.findElement("xpath", "//*[@id='content-main-section']/div[3]/div[2]/table/tbody/tr[2]/td[3]/a")
+				.click();// Click POnum
+
+		List<WebElement> InvID_List = WebdriverWait.findElements("xpath",
+				"//*[@id='content-main-section']/div[5]/div[2]/table/tbody/tr");
+		System.out.println(InvID_List.size());
+
+		for (int Inv = 1; Inv <= InvID_List.size(); Inv++) {
+			String Inv_sts = WebdriverWait
+					.findElement("xpath",
+							"//*[@id='content-main-section']/div[5]/div[2]/table/tbody[" + Inv + "]/tr/td[4]")
+					.getText();
+			Assert.assertEquals("Paid", Inv_sts);
+		}
+	}
+}

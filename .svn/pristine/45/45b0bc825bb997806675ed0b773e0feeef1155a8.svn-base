@@ -1,0 +1,43 @@
+Feature: PO with Inventory Flow
+
+
+Background: Login to the Application
+Given Launch the Application
+Then Login with valid Credentials
+
+@Test1
+Scenario: Create Req for PO Inventory
+
+	Given Create PO Req for Inv
+	Then Create PO RFQ for Inv
+	Then Create PO Quote for Inv
+
+@Test2	
+Scenario: Create PO with Inventory
+
+	Given Create New PO & Enter Organization & Supplier
+	And Add Ship Groups	
+	And Add Products
+	Then Validate GrandTotal & Tax
+	And Approve PO
+
+@Test3	
+Scenario: Receive PO Inventory 	
+	
+	Given  Receive Inventory for all the facilities		
+
+@Test4
+Scenario: Approve & Post all the Invoices and Make Payments
+
+	Given Validate/Approve and Post all the Invoice ID
+	Then Validate all the Inventories under Finance Module
+	And Make Payments for all the Invoice ID
+	
+
+@ExcelReportTest
+
+Scenario: Download and validate reports
+
+	Given Validate Reports
+	
+	

@@ -1,0 +1,35 @@
+package com.Facilities_Modules;
+
+import org.junit.Assert;
+
+import com.Utils.Base;
+import com.Utils.ExcelWriter;
+import com.Utils.WebdriverWait;
+
+public class Facilities_Shipments_View extends Base {
+
+	public static void Shpmnt_Status_Val() {
+
+		String Ship_status = WebdriverWait.findElement("xpath", "//*[@id='content-main-section']//tr//td[4]").getText();
+		Assert.assertEquals("Shipped", Ship_status);
+	}
+
+	public static void PO_Capture_ShpID(String sheetname, int row) {
+
+		String ShipID = WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[1]/td[2]")
+				.getText();
+		ExcelWriter.writeExcelFile(sheetname, row, 4, ShipID);
+
+	}
+
+	public static void PO_Shpmnt_Status_Val() {
+
+		String Ship1_status = WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[2]/td[4]")
+				.getText();
+		Assert.assertEquals("Received", Ship1_status);
+		log.info("Ship1 received successfully");
+	}
+
+}

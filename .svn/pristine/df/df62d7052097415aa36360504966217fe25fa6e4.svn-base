@@ -1,0 +1,14 @@
+package com.Procurement_Modules;
+
+import com.Utils.Base;
+import com.Utils.WebdriverWait;
+
+public class Procurement_PurchaseReturn_ReturnHeader extends Base {
+
+	public static void Update_ReturnHeader() {
+
+		WebdriverWait.findElement("xpath", "//*[@id='content-main-section']/form/div/div[2]/div/input").click();
+
+	}
+
+}

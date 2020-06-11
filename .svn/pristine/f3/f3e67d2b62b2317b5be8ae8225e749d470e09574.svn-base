@@ -1,0 +1,267 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "line": 3,
+        "name": "Login to the Application",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 12656910000,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "Launch the Application",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 2279959400,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "Login with valid Credentials",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 13,
+        "name": "Create SO Normal Flow",
+        "description": "",
+        "id": "so-flow;create-so-normal-flow",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 10337443600,
+              "status": "passed"
+            },
+            "line": 15,
+            "name": "Create New SO",
+            "match": {
+              "location": "SO_Normal_Flow_Stepdef.create_New_SO()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 5842443200,
+              "status": "passed"
+            },
+            "line": 16,
+            "name": "Add Shipping Details",
+            "match": {
+              "location": "SO_Normal_Flow_Stepdef.add_Shipping_Details()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 53996216600,
+              "status": "passed"
+            },
+            "line": 17,
+            "name": "Add Order Items",
+            "match": {
+              "location": "SO_Normal_Flow_Stepdef.add_Order_Items()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 82468900,
+              "status": "passed"
+            },
+            "line": 18,
+            "name": "Validate GrandTotal \u0026 Tax for SO",
+            "match": {
+              "location": "SO_Normal_Flow_Stepdef.validate_GrandTotal_Tax_for_SO()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 1678332900,
+              "status": "passed"
+            },
+            "line": 19,
+            "name": "Approve SO",
+            "match": {
+              "location": "SO_Normal_Flow_Stepdef.approve_SO()"
+            },
+            "keyword": "And "
+          }
+        ],
+        "tags": [
+          {
+            "line": 12,
+            "name": "@Test32"
+          }
+        ]
+      },
+      {
+        "line": 3,
+        "name": "Login to the Application",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 10842583100,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "Launch the Application",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 2350172000,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "Login with valid Credentials",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 22,
+        "name": "Create Shipment",
+        "description": "",
+        "id": "so-flow;create-shipment",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 58050610300,
+              "status": "passed"
+            },
+            "line": 24,
+            "name": "Create Shipment for all the facilities",
+            "match": {
+              "location": "SO_Normal_Flow_Stepdef.create_Shipment_for_all_the_facilities()"
+            },
+            "keyword": "Given "
+          }
+        ],
+        "tags": [
+          {
+            "line": 21,
+            "name": "@Test33"
+          }
+        ]
+      },
+      {
+        "line": 3,
+        "name": "Login to the Application",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 10642305000,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "Launch the Application",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 1972235600,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "Login with valid Credentials",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 27,
+        "name": "Approve \u0026 Post all the Invoices and Make Payments",
+        "description": "",
+        "id": "so-flow;approve-\u0026-post-all-the-invoices-and-make-payments",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 24267777800,
+              "status": "passed"
+            },
+            "line": 29,
+            "name": "Validate/Approve and Post all the Invoice ID for SO",
+            "match": {
+              "location": "SO_Normal_Flow_Stepdef.validate_Approve_and_Post_all_the_Invoice_ID_for_SO()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 30800,
+              "status": "passed"
+            },
+            "line": 30,
+            "name": "Validate all the Shipments under Finance Module",
+            "match": {
+              "location": "SO_Normal_Flow_Stepdef.validate_all_the_Shipments_under_Finance_Module()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 77300,
+              "status": "passed"
+            },
+            "line": 31,
+            "name": "Make Payments for all the Invoice ID for SO",
+            "match": {
+              "location": "SO_Normal_Flow_Stepdef.make_Payments_for_all_the_Invoice_ID_for_SO()"
+            },
+            "keyword": "And "
+          }
+        ],
+        "tags": [
+          {
+            "line": 26,
+            "name": "@Test34"
+          }
+        ]
+      }
+    ],
+    "name": "SO Flow",
+    "description": "",
+    "id": "so-flow",
+    "keyword": "Feature",
+    "uri": "4_SO Flow.feature"
+  }
+]

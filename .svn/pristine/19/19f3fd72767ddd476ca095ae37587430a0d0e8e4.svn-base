@@ -1,0 +1,81 @@
+package com.Crest_Scenarios_StepDefinitions;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.AccountReceivable_Modules.AR_SalesInvoice;
+import com.Facilities_Modules.Facilities_Shipments;
+import com.Sales_Modules.Sales_SalesOrder;
+import com.Sales_Modules.Sales_SalesOrder_View;
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+
+public class SO_OfflinePayment_Flow_Stepdef extends Base {
+
+	List<HashMap<String, String>> SO_data = CrestTestDataReader.getSOData();
+
+	@Given("^Create New Sales Quote$")
+	public void create_New_Sales_Quote() {
+
+	}
+
+	// Create SO Offline Payment Flow
+
+	@Given("^Create New SO - Offline Flow$")
+	public void create_New_SO_Offline_Flow() {
+		Sales_SalesOrder.SO_StartOrder(SO_data, "SO Normal Flow", "Domestic");
+	}
+
+	@Then("^Add Shipping Details - Offline Flow$")
+	public void add_Shipping_Details_Offline_Flow() {
+		Sales_SalesOrder.SO_ShippingDetails(SO_data);
+	}
+
+	@Then("^Add Order Items - Offline Flow$")
+	public void add_Order_Items_Offline_Flow() throws InterruptedException {
+		Sales_SalesOrder.SO_OrderItems(SO_data);
+	}
+
+	@Then("^Review & Create SO - Offline Flow$")
+	public void review_Create_SO_Offline_Flow() {
+		Sales_SalesOrder.SO_ReviewCreateSO("SO");
+	}
+
+	@Then("^Validate GrandTotal & Tax for SO - Offline Flow$")
+	public void validate_GrandTotal_Tax_for_SO_Offline_Flow() {
+		Sales_SalesOrder_View.SO_GrdTotal_Val(SO_data);
+	}
+
+	@Then("^Approve SO - Offline Flow$")
+	public void approve_SO_Offline_Flow() {
+		Sales_SalesOrder_View.Approve_SO();
+	}
+
+	// Scenario: Create Shipment
+
+	@Given("^Create Shipment for all the facilities$")
+	public void create_Shipment_for_all_the_facilities() throws InterruptedException {
+		Facilities_Shipments.SO_CreateShipment();
+	}
+
+	// Scenario: Approve & Post all the Invoices and Make Payments
+
+	@Given("^Validate/Approve and Post all the Invoice ID for SO$")
+	public void validate_Approve_and_Post_all_the_Invoice_ID_for_SO() {
+		AR_SalesInvoice.SO_InvoicePosting();
+	}
+
+	@Then("^Validate all the Shipments under Finance Module$")
+	public void validate_all_the_Shipments_under_Finance_Module() {
+
+	}
+
+	@Then("^Make Payments for all the Invoice ID for SO$")
+	public void make_Payments_for_all_the_Invoice_ID_for_SO() {
+
+	}
+
+}

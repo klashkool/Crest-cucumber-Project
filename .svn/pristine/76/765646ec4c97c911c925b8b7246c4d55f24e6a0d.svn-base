@@ -1,0 +1,129 @@
+package com.Crest_Scenarios_StepDefinitions;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.AccountsPayable_Modules.AP_Payments;
+import com.AccountsPayable_Modules.AP_PurchaseInvoices;
+import com.Crest_ERP_Login.Crest_Login;
+import com.Facilities_Modules.Facilities_Shipments;
+import com.Procurement_Modules.Procurement_PurchaseOrder;
+import com.Procurement_Modules.Procurement_PurchaseOrder_View;
+import com.Procurement_Modules.Procurement_PurchaseReturn;
+import com.Procurement_Modules.Procurement_Quotes;
+import com.Procurement_Modules.Procurement_RFQ;
+import com.Procurement_Modules.Procurement_Requirements_Requirements;
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+
+import cucumber.api.java.After;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+
+public class PO_Inventory_Flow_Stepdef extends Base {
+
+	List<HashMap<String, String>> PO_Inv_data;
+
+
+	// Crest Login
+	@Given("^Launch the Application$")
+	public void launch_the_Application() {
+		PO_Inv_data = CrestTestDataReader.getPOInvData();
+		Base.initialization();
+	}
+
+	@Then("^Login with valid Credentials$")
+	public void login_with_valid_Credentials() {
+		Crest_Login.Login();
+	}
+
+	// Scenario: Create Req for PO Inventory
+	@Given("^Create PO Req - Inv$")
+	public void create_PO_Req_Inv() throws InterruptedException {
+		Procurement_Requirements_Requirements.PO_Req(PO_Inv_data, "PO_Inv");
+	}
+
+	@Then("^Create PO RFQ - Inv$")
+	public void create_PO_RFQ_Inv() throws InterruptedException {
+		Procurement_RFQ.PO_RFQ(PO_Inv_data, "PO_Inv");
+	}
+
+	@Then("^Create PO Quote - Inv$")
+	public void create_PO_Quote_Inv() {
+		Procurement_Quotes.PO_Quotes(PO_Inv_data);
+	}
+
+	// Scenario: Create PO with Inventory
+
+	@Given("^Create New PO - Start Order - Inv$")
+	public void create_New_PO_Start_Order_Inv() {
+		Procurement_PurchaseOrder.PO_Start_Order(PO_Inv_data, "PO Inv Flow", "Normal");
+	}
+
+	@Then("^Add Shipping Details - Inv$")
+	public void add_Shipping_Details_Inv() {
+		Procurement_PurchaseOrder.PO_Shipping_Details(PO_Inv_data);
+	}
+
+	@Then("^Add Order Items - Inv$")
+	public void add_Order_Items_Inv() throws InterruptedException {
+		Procurement_PurchaseOrder.PO_OrderItems(PO_Inv_data);
+	}
+
+	@Then("^Review & Create PO - Inv$")
+	public void review_Create_PO_Inv() {
+		Procurement_PurchaseOrder.PO_ReviewCreatePO("PO_Inv");
+	}
+
+	@Then("^Validate GrandTotal & Tax - Inv$")
+	public void validate_GrandTotal_Tax_Inv() {
+		Procurement_PurchaseOrder_View.PO_GrdTotal_Val(PO_Inv_data);
+	}
+
+	@Then("^Approve PO - Inv$")
+	public void approve_PO_Inv() {
+		Procurement_PurchaseOrder_View.PO_Approve();
+	}
+
+	// Scenario: Receive PO Inventory
+
+	@Given("^Receive Inventory for all the facilities - Inv$")
+	public void receive_Inventory_for_all_the_facilities_Inv() throws InterruptedException {
+		Facilities_Shipments.PO_ReceiveInv(PO_Inv_data, "PO_Inv");
+		Procurement_PurchaseOrder_View.CaptureInvID();
+		// Test2Test.test2();
+	}
+
+	// Scenario: Approve & Post all the Invoices and Make Payments
+
+	@Given("^Validate/Approve and Post all the Invoice ID - Inv$")
+	public void validate_Approve_and_Post_all_the_Invoice_ID() throws InterruptedException {
+		AP_PurchaseInvoices.InvoicePosting(PO_Inv_data);
+	}
+
+	@Then("^Validate all the Inventories under Finance Module$")
+	public void navigate_to_Finance_Module_Validate_all_the_Inventories() {
+		// financeAcctTrans = new Financials_AcctTransaction();
+		// financeAcctTrans.Acct_Trans();
+	}
+
+	// Scenario: Make Payments for all the Invoices
+
+	@Given("^Make payments for first Three Invoices - Inv$")
+	public void make_payments_for_first_Three_Invoices_Inv() throws InterruptedException {
+		AP_Payments.Payments(PO_Inv_data, "PO_Inv");
+	}
+
+	// Given Create PO Return
+
+	@Given("^Create PO Return$")
+	public void create_PO_Return() {
+		Procurement_PurchaseReturn.PO_Return(PO_Inv_data);
+	}
+
+	@After
+
+	public void TearDown() {
+		driver.quit();
+	}
+}

@@ -1,0 +1,73 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "line": 4,
+        "name": "Login to the Application",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 15372960800,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "Launch the Application",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 11119297900,
+              "error_message": "java.lang.NullPointerException\r\n\tat com.Crest_ERP_Login.Crest_Login.Login(Crest_Login.java:16)\r\n\tat com.Crest_Scenarios_StepDefinitions.PO_Inventory_Flow_Stepdef.login_with_valid_Credentials(PO_Inventory_Flow_Stepdef.java:33)\r\n\tat ✽.Then Login with valid Credentials(1_PO with Inventory Flow.feature:6)\r\n",
+              "status": "failed"
+            },
+            "line": 6,
+            "name": "Login with valid Credentials",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 26,
+        "name": "Receive PO Inventory",
+        "description": "",
+        "id": "po-with-inventory-flow;receive-po-inventory",
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "status": "skipped"
+            },
+            "line": 28,
+            "name": "Receive Inventory for all the facilities - Inv",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.receive_Inventory_for_all_the_facilities_Inv()"
+            },
+            "keyword": "Given "
+          }
+        ],
+        "tags": [
+          {
+            "line": 25,
+            "name": "@Test3"
+          }
+        ]
+      }
+    ],
+    "name": "PO with Inventory Flow",
+    "description": "",
+    "id": "po-with-inventory-flow",
+    "keyword": "Feature",
+    "uri": "1_PO with Inventory Flow.feature"
+  }
+]

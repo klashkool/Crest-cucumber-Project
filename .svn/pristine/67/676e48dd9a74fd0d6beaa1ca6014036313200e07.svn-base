@@ -1,0 +1,119 @@
+package com.Crest_Scenarios_StepDefinitions;
+
+import com.AccountsPayable_Modules.AP_Payments;
+import com.AccountsPayable_Modules.AP_PurchaseInvoices;
+import com.Crest_ERP_Login.Crest_Login;
+import com.Facilities_Modules.Facilities_Shipments;
+import com.Procurement_Modules.Procurement_PurchaseOrder;
+import com.Procurement_Modules.Procurement_RFQ;
+import com.Procurement_Modules.Procurement_Reports;
+import com.Procurement_Modules.Procurement_Req;
+import com.Utils.Base;
+import com.Utils.PDF_Reader;
+
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+
+public class PO_Inventory_Flow_Stepdef extends Base {
+
+	// Crest Login
+	@Given("^Launch the Application$")
+	public void launch_the_Application() {
+		Base.initialization();
+	}
+
+	@Then("^Login with valid Credentials$")
+	public void login_with_valid_Credentials() {
+		Crest_Login.Login();
+	}
+
+	// Scenario: Create Req for PO Inventory
+	@Given("^Create PO Req for Inv$")
+	public void create_New_Requirements_for_PO() {
+		Procurement_Req.PO_Req_Inv();
+	}
+
+	@Then("^Create PO RFQ for Inv$")
+	public void create_PO_RFQ() {
+		Procurement_RFQ.PO_RFQ_Inv();
+	}
+
+	@Then("^Create PO Quote for Inv$")
+	public void create_PO_Quote() {
+
+	}
+
+	// Scenario: Create PO with Inventory
+
+	@Given("^Create New PO & Enter Organization & Supplier$")
+	public void create_New_PO_Enter_Organization_Supplier() {
+		Procurement_PurchaseOrder.Start_Order();
+	}
+
+	@And("^Add Ship Groups$")
+	public void add_Ship_Groups() {
+		Procurement_PurchaseOrder.Add_ShpGrps();
+	}
+
+	@And("^Add Products$")
+	public void add_Products() throws InterruptedException {
+		Procurement_PurchaseOrder.Add_Prd();
+	}
+
+	@Then("^Validate GrandTotal & Tax$")
+	public void validate_GrandTotal_Tax() {
+		Procurement_PurchaseOrder.GrdTotal_Val();
+	}
+
+	@And("^Approve PO$")
+	public void approve_PO() {
+		Procurement_PurchaseOrder.Approve_Po();
+	}
+
+	// Scenario: Receive PO Inventory
+
+	@Given("^Receive Inventory for all the facilities$")
+	public void receive_Inventory_for_all_the_facilities() {
+		Facilities_Shipments.ReceiveInv();
+		Facilities_Shipments.CaptureInvID();
+	}
+
+	// Scenario: Approve & Post all the Invoices and Make Payments
+
+	@Given("^Validate/Approve and Post all the Invoice ID$")
+	public void validate_Approve_and_Post_all_the_Invoice_ID() {
+		AP_PurchaseInvoices.InvoicePosting();
+	}
+
+	@Then("^Validate all the Inventories under Finance Module$")
+	public void navigate_to_Finance_Module_Validate_all_the_Inventories() {
+		//		financeAcctTrans = new Financials_AcctTransaction();
+		//		financeAcctTrans.Acct_Trans();
+	}
+
+	@And("^Make Payments for all the Invoice ID$")
+	public void make_Payments_for_all_the_Invoice_ID() throws InterruptedException {
+		AP_Payments.Payments();
+
+	}
+
+	// Excel Report Testing------------------------------------------------------------------------------
+
+	@Given("^Validate Reports$")
+		public void download_excel() throws InterruptedException {
+			Procurement_Reports.PO_Report_Val();
+		}
+
+	@Given("^open reports$")
+	public void open_reports() throws Throwable {
+		PDF_Reader.PDF_Val();
+	}
+
+//	@After
+//
+//	public static void TearDown() {
+//		driver.quit();
+//	}
+
+}

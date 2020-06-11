@@ -1,0 +1,50 @@
+package com.Facilities_Modules;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.Utils.Base;
+import com.Utils.ExcelReader;
+
+public class Facilities_ReceiveAdHoc extends Base {
+	
+	public static Logger log = Logger.getLogger(Facilities_Shipments.class);
+	
+	List<HashMap<String, String>> PO_Inv_Adhoc_data = (List<HashMap<String, String>>) ExcelReader.readExcelDatafromFile(
+			"D:\\Projects\\CrestCucumber\\src\\main\\java\\com\\Utils\\Crest_TestData.xlsx", "PO_Adhoc");
+	
+
+	// Scenario : Receive Adhoc Products
+	
+	public void PO_Adhoc_Recv_Adhoc() {
+		
+		driver.findElement(By.linkText("FACILITIES")).click();
+		driver.findElement(By.linkText("Receive Ad Hoc")).click();		
+		driver.findElement(By.name("purchaseOrderId")).sendKeys(PO_Inv_Adhoc_data.get(13).get("Supplier"));
+		driver.findElement(By.linkText("Get Details")).click();
+		
+		for(int j=2;j<=6;j++) {
+			
+			if(j>=3 && j<=4) {
+				
+				driver.findElement(By.xpath("/html/body/div[2]/div[4]/div/div[1]/div[2]/form[2]/div/table[2]/tbody/tr["+j+"]/td[8]/input")).clear();
+				driver.findElement(By.xpath("/html/body/div[2]/div[4]/div/div[1]/div[2]/form[2]/div/table[2]/tbody/tr["+j+"]/td[8]/input")).sendKeys("10");
+			}
+			
+			driver.findElement(By.linkText("Receive")).click();
+			
+			
+			
+		}
+		
+
+		
+		
+		
+	}
+	
+}

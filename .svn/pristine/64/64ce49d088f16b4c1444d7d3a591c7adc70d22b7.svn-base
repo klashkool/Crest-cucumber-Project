@@ -1,0 +1,55 @@
+package com.Facilities_Modules;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.Sales_Modules.Sales_SalesOrder;
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+
+public class Facilities_Shipments_OrderItems extends Base {
+
+	static WebDriverWait wait = new WebDriverWait(driver, 100);
+	public static Logger log = Logger.getLogger(Sales_SalesOrder.class);
+	static List<HashMap<String, String>> SO_data = CrestTestDataReader.getSOData();
+
+	public static void SO_Partial_Shpmnt() {
+
+		driver.findElement(By.linkText("Order Items")).click();
+		driver.findElement(By.xpath("//*[@id='content-main-section']//div//tr[3]//td//input")).click();
+
+		driver.findElement(By.name("selectAll")).click();
+		List<WebElement> Shpqty_List = driver.findElements(By.xpath("//*[@id='form']//tr"));
+		System.out.println(Shpqty_List.size());
+		for (int a = 2; a <= Shpqty_List.size(); a++) {
+			String PrdId = driver.findElement(By.xpath("//*[@id='form']//tr[" + a + "]//td[2]")).getText();
+
+			if (PrdId.equalsIgnoreCase("1 X 20W BATTEN LIGHT FITTING, DANPEX [DNPFT001]")) {
+				driver.findElement(By.name("_rowSubmit_o_" + (a - 2))).click();
+			}
+		}
+		driver.findElement(By.id("submitButton")).click();
+
+	}
+
+	public static void SO_Full_Shpmnt() {
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Order Items")));
+		driver.findElement(By.linkText("Order Items")).click();
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(By.xpath("//*[@id='content-main-section']//div//tr[3]//td//input")));
+		driver.findElement(By.xpath("//*[@id='content-main-section']//div//tr[3]//td//input")).click();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("selectAll")));
+		driver.findElement(By.name("selectAll")).click();
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("submitButton")));
+		driver.findElement(By.id("submitButton")).click();
+	}
+
+}

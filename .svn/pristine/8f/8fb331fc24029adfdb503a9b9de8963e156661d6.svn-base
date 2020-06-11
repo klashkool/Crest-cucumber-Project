@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="4" time="287.605055">
+<testcase classname="PO with Inventory Flow" name="Create PO - PO Inv Flow" time="80.850526">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Create New PO - Start Order - PO Inv Flow.............................passed
+Then Add Shipping Details - PO Inv Flow.....................................passed
+Then Add Order Items - PO Inv Flow..........................................passed
+Then Review & Create PO - PO Inv Flow.......................................passed
+Then Validate GrandTotal & Tax - PO Inv Flow................................passed
+And Approve PO - PO Inv Flow................................................passed
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Receive PO - PO Inv Flow" time="96.379974">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Receive Inventory for all the facilities - PO Inv Flow................passed
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Approve &amp; Post all the Invoices - PO Inv Flow" time="56.213653">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Validate/Approve and Post all the Invoice ID - PO Inv Flow............passed
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Make Payments for all the Invoices - PO Inv Flow" time="54.160902">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Make payments for all the Invoices - PO Inv Flow......................passed
+]]></system-out>
+</testcase>
+</testsuite>

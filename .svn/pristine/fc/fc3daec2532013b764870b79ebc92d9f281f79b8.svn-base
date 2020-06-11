@@ -1,0 +1,141 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "line": 3,
+        "name": "Login to the Application",
+        "description": "",
+        "type": "background",
+        "keyword": "Background",
+        "steps": [
+          {
+            "result": {
+              "duration": 13016281800,
+              "status": "passed"
+            },
+            "line": 4,
+            "name": "Launch the Application",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 2188080300,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "Login with valid Credentials",
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+            },
+            "keyword": "Then "
+          }
+        ]
+      },
+      {
+        "line": 9,
+        "name": "Create PO with Encumbrance",
+        "description": "",
+        "id": "po-with-encumbrance-flow;create-po-with-encumbrance",
+        "after": [
+          {
+            "result": {
+              "duration": 858434600,
+              "status": "passed"
+            },
+            "match": {
+              "location": "PO_Inventory_Flow_Stepdef.TearDown()"
+            }
+          },
+          {
+            "result": {
+              "duration": 2079000,
+              "status": "passed"
+            },
+            "match": {
+              "location": "PO_Inv_Adhoc_Flow_Stepdef.TearDown()"
+            }
+          }
+        ],
+        "type": "scenario",
+        "keyword": "Scenario",
+        "steps": [
+          {
+            "result": {
+              "duration": 10517673500,
+              "status": "passed"
+            },
+            "line": 11,
+            "name": "Create New PO with Encumbrance \u0026 Enter Organization \u0026 Supplier",
+            "match": {
+              "location": "PO_Enc_Flow_Stepdef.create_New_PO_with_Encumbrance_Enter_Organization_Supplier()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 2834610400,
+              "status": "passed"
+            },
+            "line": 12,
+            "name": "Add Ship Groups for PO with Encumbrance",
+            "match": {
+              "location": "PO_Enc_Flow_Stepdef.add_Ship_Groups_for_PO_with_Encumbrance()"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 24411814500,
+              "status": "passed"
+            },
+            "line": 13,
+            "name": "Add Products for PO with Encumbrance",
+            "match": {
+              "location": "PO_Enc_Flow_Stepdef.add_Products_for_PO_with_Encumbrance()"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 116797210700,
+              "error_message": "java.lang.IndexOutOfBoundsException: Index: 8, Size: 8\r\n\tat java.util.ArrayList.rangeCheck(Unknown Source)\r\n\tat java.util.ArrayList.get(Unknown Source)\r\n\tat com.Procurement_Modules.Procurement_PurchaseOrder.PO_Enc_GrdTotal_Val(Procurement_PurchaseOrder.java:470)\r\n\tat com.PO_Scenarios_StepDefinitions.PO_Enc_Flow_Stepdef.validate_GrandTotal_Tax_for_PO_with_Encumbrance(PO_Enc_Flow_Stepdef.java:37)\r\n\tat ✽.Then Validate GrandTotal \u0026 Tax for PO with Encumbrance(3_PO with Encumbrance Flow.feature:14)\r\n",
+              "status": "failed"
+            },
+            "line": 14,
+            "name": "Validate GrandTotal \u0026 Tax for PO with Encumbrance",
+            "match": {
+              "location": "PO_Enc_Flow_Stepdef.validate_GrandTotal_Tax_for_PO_with_Encumbrance()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "status": "skipped"
+            },
+            "line": 15,
+            "name": "Approve PO for PO with Encumbrance",
+            "match": {
+              "location": "PO_Enc_Flow_Stepdef.approve_PO_for_PO_with_Encumbrance()"
+            },
+            "keyword": "And "
+          }
+        ],
+        "tags": [
+          {
+            "line": 8,
+            "name": "@Test21"
+          }
+        ]
+      }
+    ],
+    "name": "PO with Encumbrance Flow",
+    "description": "",
+    "id": "po-with-encumbrance-flow",
+    "keyword": "Feature",
+    "uri": "3_PO with Encumbrance Flow.feature"
+  }
+]

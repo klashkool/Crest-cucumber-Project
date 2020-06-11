@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="8" time="633.807427">
+<testcase classname="PO with Inventory Flow" name="Create PO from Req - PO Inv Flow" time="120.347342">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Create PO Req - PO Inv Flow...........................................passed
+Then Create PO RFQ - PO Inv Flow............................................passed
+Then Create PO Quote - PO Inv Flow..........................................passed
+Then Review & Create PO - PO Inv Flow.......................................passed
+Then Validate GrandTotal & Tax - PO Inv Flow................................passed
+And Approve PO - PO Inv Flow................................................passed
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Receive PO - PO Inv Flow" time="101.257349">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Receive Inventory for all the facilities - PO Inv Flow................passed
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Approve &amp; Post all the Invoices - PO Inv Flow" time="56.763736">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Validate/Approve and Post all the Invoice ID - PO Inv Flow............passed
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Make Payments for all the Invoices - PO Inv Flow" time="44.686224">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Make payments for all the Invoices - PO Inv Flow......................passed
+]]></system-out>
+</testcase>
+<testcase classname="SO Offline Payment Flow" name="Create SO - SO Offline Payment Flow" time="81.232171">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Create New SO - SO Offline Payment Flow...............................passed
+Then Add Shipping Details - SO Offline Payment Flow.........................passed
+Then Add Order Items - SO Offline Payment Flow..............................passed
+Then Review & Create SO - SO Offline Payment Flow...........................passed
+Then Validate GrandTotal & Tax for SO - SO Offline Payment Flow.............passed
+And Approve SO - SO Offline Payment Flow....................................passed
+]]></system-out>
+</testcase>
+<testcase classname="SO Offline Payment Flow" name="Create Shipment - SO Offline Payment Flow" time="120.660336">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Create Shipment for all the facilities - SO Offline Payment Flow......passed
+]]></system-out>
+</testcase>
+<testcase classname="SO Offline Payment Flow" name="Approve &amp; Post all the Invoices - SO Offline Payment Flow" time="52.479789">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Validate/Approve and Post all the Invoice ID - SO Offline Payment Flow.passed
+]]></system-out>
+</testcase>
+<testcase classname="SO Offline Payment Flow" name="Make Payments for all the Invoices - SO Offline Payment Flow" time="56.38048">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Make Payments for all the Invoice ID - SO Offline Payment Flow........passed
+]]></system-out>
+</testcase>
+</testsuite>

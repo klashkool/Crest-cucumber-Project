@@ -1,0 +1,199 @@
+$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("2_PO with Inv\u0026Adhoc Flow.feature");
+formatter.feature({
+  "line": 1,
+  "name": "PO with Inv \u0026 Adhoc Flow",
+  "description": "",
+  "id": "po-with-inv-\u0026-adhoc-flow",
+  "keyword": "Feature"
+});
+formatter.background({
+  "line": 3,
+  "name": "Login to the Application",
+  "description": "",
+  "type": "background",
+  "keyword": "Background"
+});
+formatter.step({
+  "line": 4,
+  "name": "Launch the Application",
+  "keyword": "Given "
+});
+formatter.step({
+  "line": 5,
+  "name": "Login with valid Credentials",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+});
+formatter.result({
+  "duration": 11992025700,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+});
+formatter.result({
+  "duration": 2095019200,
+  "status": "passed"
+});
+formatter.scenario({
+  "line": 9,
+  "name": "Create PO with Inventory \u0026 Adhoc",
+  "description": "",
+  "id": "po-with-inv-\u0026-adhoc-flow;create-po-with-inventory-\u0026-adhoc",
+  "type": "scenario",
+  "keyword": "Scenario",
+  "tags": [
+    {
+      "line": 8,
+      "name": "@Test10"
+    }
+  ]
+});
+formatter.step({
+  "line": 11,
+  "name": "Create New PO Inv with Adhoc \u0026 Enter Organization \u0026 Supplier",
+  "keyword": "Given "
+});
+formatter.step({
+  "line": 12,
+  "name": "Add Ship Groups for PO Inv with Adhoc",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 13,
+  "name": "Add Products for PO Inv with Adhoc",
+  "keyword": "And "
+});
+formatter.step({
+  "line": 14,
+  "name": "Validate GrandTotal \u0026 Tax for PO Inv with Adhoc",
+  "keyword": "Then "
+});
+formatter.step({
+  "line": 15,
+  "name": "Approve PO Inv with Adhoc",
+  "keyword": "And "
+});
+formatter.match({
+  "location": "PO_Inv_Adhoc_Flow_Stepdef.create_New_PO_Inv_with_Adhoc_Enter_Organization_Supplier()"
+});
+formatter.result({
+  "duration": 8131044000,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Inv_Adhoc_Flow_Stepdef.add_Ship_Groups_for_PO_Inv_with_Adhoc()"
+});
+formatter.result({
+  "duration": 4123695200,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Inv_Adhoc_Flow_Stepdef.add_Products_for_PO_Inv_with_Adhoc()"
+});
+formatter.result({
+  "duration": 50708506100,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Inv_Adhoc_Flow_Stepdef.validate_GrandTotal_Tax_for_PO_Inv_with_Adhoc()"
+});
+formatter.result({
+  "duration": 70042600,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Inv_Adhoc_Flow_Stepdef.create_Approve_PO_Inv_with_Adhoc()"
+});
+formatter.result({
+  "duration": 3601040700,
+  "status": "passed"
+});
+formatter.after({
+  "duration": 784411200,
+  "status": "passed"
+});
+formatter.after({
+  "duration": 137600,
+  "status": "passed"
+});
+formatter.background({
+  "line": 3,
+  "name": "Login to the Application",
+  "description": "",
+  "type": "background",
+  "keyword": "Background"
+});
+formatter.step({
+  "line": 4,
+  "name": "Launch the Application",
+  "keyword": "Given "
+});
+formatter.step({
+  "line": 5,
+  "name": "Login with valid Credentials",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+});
+formatter.result({
+  "duration": 10532979500,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+});
+formatter.result({
+  "duration": 1890708900,
+  "status": "passed"
+});
+formatter.scenario({
+  "line": 18,
+  "name": "Receive Inventory for Inv \u0026 Adhoc",
+  "description": "",
+  "id": "po-with-inv-\u0026-adhoc-flow;receive-inventory-for-inv-\u0026-adhoc",
+  "type": "scenario",
+  "keyword": "Scenario",
+  "tags": [
+    {
+      "line": 17,
+      "name": "@Test11"
+    }
+  ]
+});
+formatter.step({
+  "line": 20,
+  "name": "Receive Inventory Products",
+  "keyword": "Given "
+});
+formatter.step({
+  "line": 21,
+  "name": "Receive Adhoc Products",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "PO_Inv_Adhoc_Flow_Stepdef.receive_Inventory_Products()"
+});
+formatter.result({
+  "duration": 14308174500,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Inv_Adhoc_Flow_Stepdef.receive_Adhoc_Products()"
+});
+formatter.result({
+  "duration": 36300,
+  "status": "passed"
+});
+formatter.after({
+  "duration": 789334400,
+  "status": "passed"
+});
+formatter.after({
+  "duration": 67500,
+  "status": "passed"
+});
+});

@@ -1,0 +1,65 @@
+package com.Financials_Modules;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.junit.Assert;
+
+
+import com.Utils.Base;
+import com.Utils.ExcelReader;
+
+public class Financials_AcctTransaction extends Base {
+
+	public static Logger log = Logger.getLogger(Financials_AcctTransaction.class);
+	//WebDriverWait wait = new WebDriverWait(driver, 100);
+	List<HashMap<String, String>> excelData = (List<HashMap<String, String>>) ExcelReader.readExcelDatafromFile(
+			"D:\\Projects\\CrestCucumber\\src\\main\\java\\com\\Utils\\Crest_TestData.xlsx", "Sheet1");
+
+	public void Acct_Trans() {
+
+		driver.findElement(By.linkText("FINANCIALS")).click();
+		driver.findElement(By.linkText("Accounting Transaction")).click();
+		driver.findElement(By.xpath("//*[@id='screenlet_1_col']/table/tbody/tr[5]/td[2]/a")).click();
+	//	driver.findElement(By.linkText("GL Transaction View/Entry")).click();
+
+		int a = 14;
+		for (int Shp = 1; Shp <=4; Shp++) {
+			driver.findElement(By.linkText("GL Transaction View/Entry")).click();
+			driver.findElement(By.xpath("//*[@id='toggleLink']")).click();
+			driver.findElement(By.name("invoiceId")).sendKeys(excelData.get(a).get("Currency"));
+			driver.findElement(By.xpath("//*[@id='findAcctgTrans']/div/table/tbody[1]/tr[13]/td/input")).click();
+
+			String Posted_Status = driver.findElement(By.xpath("//*[@id='example']/tbody/tr/td[5]")).getText();
+			Assert.assertEquals("Y", Posted_Status);
+			driver.findElement(By.xpath("//*[@id='example']/tbody/tr/td[1]/a")).click();
+
+			String TotalCredit = driver.findElement(
+							By.xpath("//*[@id='content-main-section']/div[2]/div[2]/div/table/tbody[1]/tr[6]/td[2]"))
+					.getText().replace("₹", "").replace(",", "");
+			String TotalDebit = driver.findElement(
+							By.xpath("//*[@id='content-main-section']/div[2]/div[2]/div/table/tbody[1]/tr[6]/td[4]"))
+					.getText().replace("₹", "").replace(",", "");
+
+			System.out.println(TotalCredit);
+			System.out.println(TotalDebit);
+			System.out.println(excelData.get(a).get("Facility-ShipGroup"));
+
+			if (TotalCredit.equals(excelData.get(a).get("Facility-ShipGroup"))&&TotalDebit.equals(excelData.get(a).get("Facility-ShipGroup")))
+			{Assert.assertTrue(true);				
+			} else {
+			System.out.println("Failed Due to Product Value Mismatch");
+			Assert.assertFalse(false);
+			}
+			System.out.println("Shipment Values validated Successfully");
+			a++;
+		}
+
+	}
+
+}

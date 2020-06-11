@@ -1,0 +1,91 @@
+package com.Procurement_Modules;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.junit.Assert;
+import org.openqa.selenium.WebElement;
+
+import com.Utils.Base;
+import com.Utils.ExcelWriter;
+import com.Utils.WebdriverWait;
+
+public class Procurement_PurchaseOrder_View extends Base {
+
+	public static String po_Number;
+
+	public static void POnum_Capture(String sheetname) {
+
+		String PO_Num = WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']/div[1]/div[2]/table/tbody/tr[1]/td[2]/a")
+				.getText();
+		System.out.println("PO Number = " + PO_Num);
+		po_Number = PO_Num;
+		ExcelWriter.writeExcelFile(sheetname, 15, 3, PO_Num);
+
+
+	}
+
+	public static void PO_GrdTotal_Val(List<HashMap<String, String>> data) {
+
+		log.info("Validating GrandTotal");
+		String GrdTotal = WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']/div[6]/div[2]/table/tbody/tr[14]/td[3]/span")
+				.getText().replace("₹", "").replace(",", "");
+		System.out.println(GrdTotal);
+		System.out.println(data.get(18).get("Sales Price"));
+		Assert.assertEquals(data.get(18).get("Sales Price"), GrdTotal);
+		log.info("Grand Total & Tax Amt validated Successfully");
+	}
+
+	public static void PO_Approve() {
+
+		log.info("Approve PO for Inv");
+		WebdriverWait.findElement("link", "Review Order").click();
+		WebdriverWait.findElement("link", "Review 2 Order").click();
+		WebdriverWait.findElement("link", "Approve Order").click();
+		String App_Status_Val = WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']/div[1]/div[2]/table/tbody/tr[5]/td[2]")
+				.getText();
+		Assert.assertEquals("Approved", App_Status_Val);
+		log.info("Status validated successfully as Approved");
+
+	}
+
+	public static void CaptureInvID(String sheetname) {
+
+		log.info("Receiving Inventory for all the products");
+		int j = 15;
+
+		List<WebElement> InvTable = WebdriverWait.findElements("xpath",
+				"//*[@id= 'content-main-section']/div[5]/div[2]/table/tbody");
+
+		for (int Inv = 1; Inv <= InvTable.size(); Inv++) {
+
+			String bpath = "//*[@id='content-main-section']/div[5]/div[2]/table/tbody[";
+			String apath = "]/tr/td[1]";// Inv ID
+
+			String InvID = WebdriverWait.findElement("xpath", bpath + Inv + apath).getText();
+
+			ExcelWriter.writeExcelFile(sheetname, j, 5, InvID);
+			j++;
+		}
+	}
+
+	public static void InvID_PaymntStatus_Val() {
+
+		List<WebElement> InvID_List = WebdriverWait.findElements("xpath",
+				"//*[@id='content-main-section']/div[5]/div[2]/table/tbody/tr");
+		System.out.println(InvID_List.size());
+
+		for (int Inv = 1; Inv <= InvID_List.size(); Inv++) {
+			String Inv_sts = WebdriverWait
+					.findElement("xpath",
+							"//*[@id='content-main-section']/div[5]/div[2]/table/tbody[" + Inv + "]/tr/td[4]")
+					.getText();
+			Assert.assertEquals("Paid", Inv_sts);
+
+		}
+
+	}
+}

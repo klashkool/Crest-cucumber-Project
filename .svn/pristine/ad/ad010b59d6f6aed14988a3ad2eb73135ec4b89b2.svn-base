@@ -1,0 +1,21 @@
+package com.Crest_ERP_Login;
+
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+
+import com.Utils.Base;
+
+public class Crest_Login extends Base {
+	
+	public static Logger log = Logger.getLogger(Crest_Login.class);
+	
+public void Login() {		
+		
+		log.info("Logging in with valid credentials");
+		driver.findElement(By.id("login-username")).sendKeys(prop.getProperty("username"));			
+		driver.findElement(By.id("login-password")).sendKeys(prop.getProperty("password"));		
+		driver.findElement(By.xpath("//*[@id='loginform']/div[3]/div/input")).click(); 
+	}
+		
+
+}

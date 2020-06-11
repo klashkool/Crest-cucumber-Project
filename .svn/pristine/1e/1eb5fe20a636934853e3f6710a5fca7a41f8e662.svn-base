@@ -1,0 +1,85 @@
+package com.Procurement_Modules;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+import com.Utils.ExcelWriter;
+import com.Utils.WebdriverWait;
+
+public class Procurement_Req extends Base {
+
+	public static Logger log = Logger.getLogger(Procurement_Req.class);
+	static WebDriverWait wait = new WebDriverWait(driver, 100);
+	static List<HashMap<String, String>> PO_Inv_data = CrestTestDataReader.getPOInvData();
+
+	public static String ReqID;
+
+	public static void PO_Req_Inv() {
+
+		log.info("Creating PO Requirements for Inventory");
+		WebdriverWait.findElement("link", "PROCUREMENT").click();
+		WebdriverWait.findElement("link", "Requirements").click();
+		WebdriverWait.findElement("link", "Create Requirement").click();
+		// Requirement Type DD
+
+		Select ReqType_DD = new Select(WebdriverWait.findElement("id", "requirementTypeId"));
+		ReqType_DD.selectByVisibleText("Product Requirement");
+		// Organization DD
+		Select ReqOrg_DD = new Select(WebdriverWait.findElement("id", "fromPartyId"));
+		ReqOrg_DD.selectByVisibleText("Southern Lubrication (Pvt) Ltd");
+
+		log.info("Adding products for Requirements");
+		for (int p = 0; p <= 9; p++) {
+			Select OrdType_DD = new Select(WebdriverWait.findElement("id", "addItemType"));
+			OrdType_DD.selectByVisibleText(PO_Inv_data.get(0).get("OrderType"));
+
+			WebdriverWait.findElement("name", "productId").sendKeys(PO_Inv_data.get(p).get("Product ID"));
+			WebdriverWait.findElement("name", "quantity").sendKeys(PO_Inv_data.get(p).get("Qty"));
+
+			Select ReqUOM_DD = new Select(WebdriverWait.findElement("id", "quantityUomId"));
+			ReqUOM_DD.selectByVisibleText(PO_Inv_data.get(p).get("UOM"));
+
+			Select Dept_DD = new Select(WebdriverWait.findElement("id", "departmentName"));
+			Dept_DD.selectByVisibleText(PO_Inv_data.get(p).get("Dept"));
+
+			WebdriverWait.findElement("name", "comments").sendKeys("Automation PO Req Test");
+
+			Select Fac_DD = new Select(WebdriverWait.findElement("id", "facilityId"));
+
+			if (p <= 4) {
+				Fac_DD.selectByVisibleText(PO_Inv_data.get(1).get("Facility-ShipGroup"));
+			} else if (p >= 5 && p <= 7) {
+				Fac_DD.selectByVisibleText(PO_Inv_data.get(6).get("Facility-ShipGroup"));
+			} else if (p >= 8 && p <= 9) {
+				Fac_DD.selectByVisibleText(PO_Inv_data.get(9).get("Facility-ShipGroup"));
+			}
+			WebdriverWait.findElement("name", "submitProduct").click();
+		}
+
+		WebdriverWait.findElement("xpath", "//*[@id='createRequirements']/div[3]/input").click();
+
+		String ReqPO_Num = WebdriverWait.findElement("xpath", "//*[@id='editRequirements']/table/tbody[1]/tr[1]/td[2]")
+				.getText();
+		System.out.println("Req ID = " + ReqPO_Num);
+		ReqID = ReqPO_Num;
+		ExcelWriter.writeExcelFile("PO_Inv", 15, 0, ReqPO_Num);
+
+		WebdriverWait.findElement("link", "Approve").click();
+
+		String ReqPO_Status = WebdriverWait
+				.findElement("xpath", "//*[@id='editRequirements']/table/tbody[1]/tr[2]/td[4]").getText();
+		Assert.assertEquals("Approved", ReqPO_Status);
+
+		System.out.println("PO Requirements for Inventory Created Successfully");
+		log.info("PO Requirements for Inventory Created Successfully");
+
+	}
+
+}

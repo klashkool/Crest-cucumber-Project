@@ -1,0 +1,52 @@
+package com.AccountReceivable_Modules;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+import org.openqa.selenium.WebElement;
+
+import com.Sales_Modules.Sales_SalesOrder;
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+import com.Utils.WebdriverWait;
+
+public class AR_SalesInvoice_Overview extends Base {
+
+	public static Logger log = Logger.getLogger(Sales_SalesOrder.class);
+	static List<HashMap<String, String>> SO_data = CrestTestDataReader.getSOData();
+
+	public static void SO_Invoice_Post() {
+
+		WebdriverWait.findElement("link", "Post").click();
+		String SOInvID_Status = WebdriverWait.findElement("xpath", "//*[@id='content-main-section']//div//tr[8]/td[2]")
+				.getText();
+		Assert.assertEquals("Posted", SOInvID_Status);
+	}
+
+	public static void SO_Inv_AcctTrans_Val() {
+
+		List<WebElement> TransTable = WebdriverWait.findElements("xpath",
+				"//*[@id='content-main-section']//div[8]//tr");
+
+		for (int a = 1; a <= TransTable.size() - 1; a++) {
+
+			String AcctName = WebdriverWait
+					.findElement("xpath", "//*[@id='content-main-section']//div[8]//tr[" + a + "]//td[11]").getText();
+
+			if (AcctName.equalsIgnoreCase("GENERAL SALES") & AcctName.equalsIgnoreCase(("Input CGST"))) {
+				String Flag = WebdriverWait
+						.findElement("xpath", "//*[@id='content-main-section']//div[8]//tr[" + a + "]//td[12]")
+						.getText();
+				Assert.assertEquals("C", Flag);
+			} else if (AcctName.equalsIgnoreCase("Accounts Receivable")) {
+				String Flag = WebdriverWait
+						.findElement("xpath", "//*[@id='content-main-section']//div[8]//tr[" + a + "]//td[12]")
+						.getText();
+				Assert.assertEquals("D", Flag);
+			}
+		}
+		System.out.println("Invoice Accounting Transactions Validated Succesfully with Debit/Credit Flag");
+	}
+}

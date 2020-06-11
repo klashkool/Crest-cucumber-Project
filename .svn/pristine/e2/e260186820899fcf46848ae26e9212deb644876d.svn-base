@@ -1,0 +1,5 @@
+browser = chrome
+url = https://crestqa.crest-erp.com:8443/crest/login/control/main
+#url = https://xfact-demo.com:8443/crest/login/control/main
+username = crest2
+password = crestERP@123

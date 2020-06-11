@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="1" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="1" time="26.492259">
+<testcase classname="PO with Inventory Flow" name="Receive PO Inventory" time="26.492259">
+<failure message="java.lang.NullPointerException&#13;&#10;&#9;at com.Crest_ERP_Login.Crest_Login.Login(Crest_Login.java:16)&#13;&#10;&#9;at com.Crest_Scenarios_StepDefinitions.PO_Inventory_Flow_Stepdef.login_with_valid_Credentials(PO_Inventory_Flow_Stepdef.java:33)&#13;&#10;&#9;at ✽.Then Login with valid Credentials(1_PO with Inventory Flow.feature:6)&#13;&#10;"><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................failed
+Given Receive Inventory for all the facilities - Inv........................skipped
+
+StackTrace:
+java.lang.NullPointerException
+	at com.Crest_ERP_Login.Crest_Login.Login(Crest_Login.java:16)
+	at com.Crest_Scenarios_StepDefinitions.PO_Inventory_Flow_Stepdef.login_with_valid_Credentials(PO_Inventory_Flow_Stepdef.java:33)
+	at ✽.Then Login with valid Credentials(1_PO with Inventory Flow.feature:6)
+]]></failure>
+</testcase>
+</testsuite>

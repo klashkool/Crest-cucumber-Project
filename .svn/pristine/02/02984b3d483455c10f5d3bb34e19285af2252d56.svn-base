@@ -1,0 +1,74 @@
+package com.Crest_Scenarios_StepDefinitions;
+
+import com.AccountReceivable_Modules.AR_SalesInvoice;
+import com.Facilities_Modules.Facilities_Shipments;
+import com.Sales_Modules.Sales_SalesOrder;
+import com.Sales_Modules.Sales_SalesOrder_View;
+import com.Utils.Base;
+
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+
+public class SO_Normal_Flow_Stepdef extends Base {
+
+
+	@Given("^Create New Sales Quote$")
+	public void create_New_Sales_Quote() {
+
+	}
+
+// Create SO Normal Flow
+
+	@Given("^Create New SO$")
+	public void create_New_SO() {
+	   Sales_SalesOrder.SO_StartOrder();
+	}
+
+	@Then("^Add Shipping Details$")
+	public void add_Shipping_Details() {
+	   Sales_SalesOrder.SO_ShippingDetails();
+	}
+
+	@Then("^Add Order Items$")
+	public void add_Order_Items() throws InterruptedException {
+		Sales_SalesOrder.SO_OrderItems();
+	}
+
+	@Then("^Validate GrandTotal & Tax for SO$")
+	public void validate_GrandTotal_Tax_for_SO() {
+		Sales_SalesOrder_View.SO_GrdTotal_Val();
+	}
+
+	@And("^Approve SO$")
+	public void approve_SO() {
+		Sales_SalesOrder_View.Approve_SO();
+	}
+
+//	Scenario: Create Shipment
+
+	@Given("^Create Shipment for all the facilities$")
+	public void create_Shipment_for_all_the_facilities() throws InterruptedException {
+		Facilities_Shipments.SO_CreateShipment();
+	}
+
+//	Scenario: Approve & Post all the Invoices and Make Payments
+
+	@Given("^Validate/Approve and Post all the Invoice ID for SO$")
+	public void validate_Approve_and_Post_all_the_Invoice_ID_for_SO() {
+		AR_SalesInvoice.SO_InvoicePosting();
+	}
+
+	@Then("^Validate all the Shipments under Finance Module$")
+	public void validate_all_the_Shipments_under_Finance_Module() {
+
+	}
+
+	@Then("^Make Payments for all the Invoice ID for SO$")
+	public void make_Payments_for_all_the_Invoice_ID_for_SO() {
+
+	}
+
+
+
+}

@@ -1,0 +1,30 @@
+package com.Sales_Modules;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import org.openqa.selenium.support.ui.Select;
+
+import com.Utils.Base;
+import com.Utils.WebdriverWait;
+
+public class Sales_SalesReturn_ReturnItems extends Base {
+
+	public static void Return_items(List<HashMap<String, String>> data) {
+
+		WebdriverWait.findElement("link", "Return Items").click();
+
+		// Adding Current Date(From Date)
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String Fromdate = (dateFormat.format(new Date()));
+
+		Select orderId_DD = new Select(WebdriverWait.findElement("name", "orderId"));
+		orderId_DD.selectByVisibleText(data.get(14).get("Customer") + " - " + Fromdate);
+
+		WebdriverWait.findElement("xpath", "//*[@id='content-main-section']/div[1]/div[2]/form/table/tbody/tr[2]/td/input").click();
+
+	}
+
+}

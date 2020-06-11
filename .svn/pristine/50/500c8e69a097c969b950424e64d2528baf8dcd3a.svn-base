@@ -1,0 +1,60 @@
+package com.Crest_Scenarios_StepDefinitions;
+
+import com.Crest_ERP_Login.Crest_Login;
+import com.Facilities_Modules.Facilities_Shipments;
+import com.Procurement_Modules.Procurement_PurchaseOrder;
+import com.Utils.Base;
+
+import cucumber.api.java.After;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+
+public class PO_Inv_Adhoc_Flow_Stepdef extends Base {
+
+	// Scenario: Create PO With Inv & Adhoc
+
+	@Given("^Create New PO Inv with Adhoc & Enter Organization & Supplier$")
+	public void create_New_PO_Inv_with_Adhoc_Enter_Organization_Supplier() {
+		Procurement_PurchaseOrder.PO_Adhoc_Start_Order();
+	}
+
+	@And("^Add Ship Groups for PO Inv with Adhoc$")
+	public void add_Ship_Groups_for_PO_Inv_with_Adhoc() {
+		Procurement_PurchaseOrder.PO_Adhoc_Add_ShpGrps();
+	}
+
+	@And("^Add Products for PO Inv with Adhoc$")
+	public void add_Products_for_PO_Inv_with_Adhoc() throws InterruptedException {
+		Procurement_PurchaseOrder.PO_Adhoc_Add_Prd();
+
+	}
+
+	@Then("^Validate GrandTotal & Tax for PO Inv with Adhoc$")
+	public void validate_GrandTotal_Tax_for_PO_Inv_with_Adhoc() {
+		Procurement_PurchaseOrder.PO_Adhoc_GrdTotal_Val();
+	}
+
+	@And("^Approve PO Inv with Adhoc$")
+	public void create_Approve_PO_Inv_with_Adhoc() {
+		Procurement_PurchaseOrder.Po_Adhoc_Approve_Po();
+	}
+
+	// Scenario: Receive Inventory for Inv & Adhoc
+
+	@Given("^Receive Inventory Products$")
+	public void receive_Inventory_Products() {
+		Facilities_Shipments.PO_Adhoc_ReceiveInv();
+	}
+
+	@Then("^Receive Adhoc Products$")
+	public void receive_Adhoc_Products() {
+
+	}
+
+//	@After
+
+//	public static void TearDown() {
+//		driver.quit();
+//	}
+}

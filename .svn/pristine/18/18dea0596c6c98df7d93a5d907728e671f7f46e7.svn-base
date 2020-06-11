@@ -1,0 +1,38 @@
+package com.Procurement_Modules;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+import com.Utils.ExcelReader;
+
+public class Procurement_Quotes extends Base {
+	
+	public static Logger log = Logger.getLogger(Procurement_Quotes.class);
+	WebDriverWait wait = new WebDriverWait(driver, 100);
+	List<HashMap<String, String>> PO_Inv_data = CrestTestDataReader.getPOInvData();	
+	List<HashMap<String, String>> PO_Inv_Adhoc_data = CrestTestDataReader.getPOInvAdhocData();
+	
+	public void PO_Quotes_Inv() {
+		
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.id("supplierPartyId")));
+		Select Quote_Sup_DD = new Select(driver.findElement(By.id("supplierPartyId")));
+		Quote_Sup_DD.selectByVisibleText("Metal Shop");
+		
+		for(int i=0;i<=9;i++) {
+			
+			driver.findElement(By.id("unitPrice_o_"+i)).sendKeys(PO_Inv_data.get(0).get(""));
+			
+		}
+		
+	}
+	
+
+}

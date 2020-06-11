@@ -1,0 +1,36 @@
+Feature: PO with Inv & Adhoc Flow
+
+Background: Login to the Application
+Given Launch the Application
+Then Login with valid Credentials
+
+
+@Test10
+Scenario: Create PO - PO Inv & Adhoc Flow
+
+	Given Create New PO - Start Order - PO Inv & Adhoc Flow
+	Then Add Shipping Details - PO Inv & Adhoc Flow 
+	Then Add Order Items - PO Inv & Adhoc Flow 
+	Then Review & Create PO - PO Inv & Adhoc Flow 
+	Then Validate GrandTotal & Tax - PO Inv & Adhoc Flow 
+	And Approve PO - PO Inv & Adhoc Flow 
+	
+@Test11
+Scenario: Receive Inventory for Inv & Adhoc	
+	
+	Given Receive Inventory & Adhoc for all the facilities - PO Inv & Adhoc Flow 
+	
+@Test12
+Scenario: Approve & Post all the Invoices - PO Inv Flow
+	
+	Given Validate/Approve and Post all the Invoice ID - PO Inv & Adhoc Flow
+	
+@Test13
+Scenario: Make Payments for all the Invoices - PO Inv & Adhoc Flow
+
+	Given Make payments for all the Invoices - PO Inv & Adhoc Flow 
+
+
+
+	
+	

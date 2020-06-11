@@ -1,0 +1,56 @@
+package com.AccountReceivable_Modules;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.Sales_Modules.Sales_SalesOrder;
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+
+public class AR_SalesInvoice extends Base {
+
+	static WebDriverWait wait = new WebDriverWait(driver, 100);
+	public static Logger log = Logger.getLogger(Sales_SalesOrder.class);
+	static List<HashMap<String, String>> SO_data = CrestTestDataReader.getSOData();
+
+	public static void SO_InvoicePosting() {
+
+		log.info("Validating and Posting all the Invoice ID's");
+		int j = 14;
+		for (int Inv = 1; Inv <= 4; Inv++) {
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("ACCOUNTS RECEIVABLE")));
+			driver.findElement(By.linkText("ACCOUNTS RECEIVABLE")).click();
+			driver.findElement(By.linkText("Sales Invoice")).click();
+			driver.findElement(By.id("invoiceId")).sendKeys(SO_data.get(j).get("Currency"));
+			driver.findElement(By.id("submit")).click();// Search
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='example']/tbody/tr/td[1]/a")));
+			driver.findElement(By.xpath("//*[@id='example']/tbody/tr/td[1]/a")).click();// InvoiceID Link
+			driver.findElement(By.id("referenceNumber")).sendKeys("1234");
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Update")));
+			driver.findElement(By.linkText("Update")).click();
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Approve")));
+			driver.findElement(By.linkText("Approve")).click();
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Post")));
+			driver.findElement(By.linkText("Post")).click();
+
+			String SOInvID_Status = driver.findElement(By.xpath("//*[@id='content-main-section']//div//tr[8]/td[2]"))
+					.getText();
+			Assert.assertEquals("Posted", SOInvID_Status);
+			j++;
+		}
+
+		System.out.println("SO Invoice ID's Posted Successfully");
+
+	}
+
+	}
+
+

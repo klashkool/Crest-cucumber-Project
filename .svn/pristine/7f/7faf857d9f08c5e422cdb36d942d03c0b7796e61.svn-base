@@ -1,0 +1,47 @@
+package com.Utils;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+public class testexcelreport_val extends Base {
+	
+	
+	List<HashMap<String, String>> Excel_data = (List<HashMap<String, String>>) ExcelReader.readExcelDatafromFile(
+			"C:\\Users\\KailashR\\Downloads\\report.xls", "purchase_order_report");
+	
+	
+	
+	public void testexcel() throws InterruptedException {
+		
+		log.info("Creating a New PO");
+		driver.findElement(By.linkText("PROCUREMENT")).click();
+		driver.findElement(By.linkText("Purchase Order")).click();
+		driver.findElement(By.linkText("Reports")).click();
+		driver.findElement(By.linkText("Purchase Order Excel")).click();
+		driver.findElement(By.name("minDate_i18n")).sendKeys("14/01/2020");
+		driver.findElement(By.name("maxDate_i18n")).sendKeys("14/01/2020");
+		driver.findElement(By.name("supplierPartyId")).sendKeys("10020");
+		
+		driver.findElement(By.xpath("//*[@id='purchaseOrderSubmit']/td/input")).click();
+		
+		Thread.sleep(2000);		
+		
+		FileRename.test();	
+		
+		
+		
+		
+		
+		System.out.println(Excel_data.get(1).get("Southern Lubrication (Pvt) Ltd"));
+		
+		
+		
+		
+	}
+
+}

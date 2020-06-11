@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="1" time="92.920278">
+<testcase classname="SO Offline Payment Flow" name="Create SO Offline Payment Flow" time="92.920278">
+<system-out><![CDATA[Given Launch the Application................................................passed
+Then Login with valid Credentials...........................................passed
+Given Create New SO - Offline Flow..........................................passed
+Then Add Shipping Details - Offline Flow....................................passed
+Then Add Order Items - Offline Flow.........................................passed
+Then Review & Create SO - Offline Flow......................................passed
+Then Validate GrandTotal & Tax for SO - Offline Flow........................passed
+And Approve SO - Offline Flow...............................................passed
+]]></system-out>
+</testcase>
+</testsuite>

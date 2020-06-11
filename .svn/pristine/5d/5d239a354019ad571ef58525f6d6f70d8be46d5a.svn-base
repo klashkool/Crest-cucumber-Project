@@ -1,0 +1,77 @@
+package com.Procurement_Modules;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+import org.openqa.selenium.support.ui.Select;
+
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+import com.Utils.ExcelWriter;
+import com.Utils.WebdriverWait;
+
+public class Procurement_RFQ extends Base {
+
+	public static Logger log = Logger.getLogger(Procurement_RFQ.class);
+	static List<HashMap<String, String>> PO_Inv_data = CrestTestDataReader.getPOInvData();
+
+	public static String RFQID;
+
+	public static void PO_RFQ_Inv() {
+
+		log.info("Creating RFQ for PO Inventory");
+		WebdriverWait.findElement("link", "Create RFQ").click();
+		WebdriverWait.findElement("xpath", "//*[@id='custRequestName']").sendKeys("PO Automation Test");
+		// Organization DD
+		Select ReqOrg_DD = new Select(WebdriverWait.findElement("id", "fromPartyId"));
+		ReqOrg_DD.selectByVisibleText("Southern Lubrication (Pvt) Ltd");
+		// Adding Request Date
+		// Adding Current Date(From Date)
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String Fromdate = (dateFormat.format(new Date()));
+		WebdriverWait.findElement("name", "custRequestDate_i18n").clear();
+		WebdriverWait.findElement("name", "custRequestDate_i18n").sendKeys(Fromdate);
+		// Response Required Date
+		// Adding 10days extra from Current Date(ToDate)
+		SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.DATE, 10);
+		String newDate = dateFormat1.format(cal.getTime());
+		WebdriverWait.findElement("name", "responseRequiredDate_i18n").sendKeys(newDate);
+		// Numbering Type DD
+		Select NumType_DD = new Select(WebdriverWait.findElement("id", "numberingFormatId"));
+		NumType_DD.selectByVisibleText("RFQ");
+		// Category DD
+		Select Category_DD = new Select(WebdriverWait.findElement("id", "custRequestCategoryId"));
+		Category_DD.selectByVisibleText("From Requirement");
+
+		WebdriverWait.findElement("xpath", "//*[@id='content-main-section']/div/a[1]").click();// Create Button
+
+		String RFQ_Status = WebdriverWait.findElement("xpath", "//*[@id='content-messages']/div/p").getText();
+		Assert.assertEquals("RFQ Created Successfully", RFQ_Status);
+		System.out.println("RFQ Created Successfully");
+
+		WebdriverWait.findElement("link", "RFQ Header").click();
+		String RFQPO_Num = WebdriverWait.findElement("xpath",
+				"//*[@id='content-main-section']/form[1]/div[1]/div[2]/table/tbody[1]/tr[1]/td[2]").getText();
+		System.out.println("RFQ ID = " + RFQPO_Num);
+		RFQID = RFQPO_Num;
+		ExcelWriter.writeExcelFile("PO_Inv", 15, 1, RFQPO_Num);
+		WebdriverWait.findElement("link", "RFQ Item").click();
+
+		// Need to be Tested
+		WebdriverWait.findElement("id", "0_lookupId_requirementId").sendKeys(PO_Inv_data.get(14).get("S.No"));
+		WebdriverWait.findElement("xpath", "//*[@id='content-main-section']/div/div[2]/form/table/tbody/tr/td[3]/input")
+				.click();
+
+		WebdriverWait.findElement("xpath", "//*[@id='content-main-section']/form[1]/div[2]/input").click();// Add Items
+		WebdriverWait.findElement("link", "Update Quote Info").click();
+	}
+
+}

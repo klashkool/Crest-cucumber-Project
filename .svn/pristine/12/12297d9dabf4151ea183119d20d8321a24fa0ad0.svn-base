@@ -1,0 +1,205 @@
+package com.Facilities_Modules;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+import org.openqa.selenium.support.ui.Select;
+
+import com.Sales_Modules.Sales_SalesOrder_View;
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+import com.Utils.ExcelWriter;
+import com.Utils.WebdriverWait;
+
+public class Facilities_Shipments extends Base {
+
+	public static Logger log = Logger.getLogger(Facilities_Shipments.class);
+	static List<HashMap<String, String>> PO_Inv_data = CrestTestDataReader.getPOInvData();
+	static List<HashMap<String, String>> PO_Inv_Adhoc_data = CrestTestDataReader.getPOInvAdhocData();
+	static List<HashMap<String, String>> data = CrestTestDataReader.getSOData();
+
+	// Scenario: Receive PO Inventory
+
+	public static void PO_ReceiveInv(List<HashMap<String, String>> data, String sheetname) throws InterruptedException {
+
+		for (int Shp = 1; Shp <= 4; Shp++) {
+
+			log.info("Receiving Inventory for all the products");
+
+			WebdriverWait.findElement("link", "FACILITIES").click();
+			WebdriverWait.findElement("link", "Shipments").click();
+			WebdriverWait.findElement("link", "Create Shipment").click();
+
+			Select ShpType_DD = new Select(WebdriverWait.findElement("id", "shipmentTypeId"));
+			ShpType_DD.selectByVisibleText("Purchase Shipment");
+
+			WebdriverWait.findElement("id", "0_lookupId_primaryOrderId").sendKeys(data.get(14).get("Supplier"));
+			WebdriverWait.findElement("id", "additionalShippingCharge").click();
+
+			Select F_ShipGrp_DDN = new Select(WebdriverWait.findElement("id", "primaryShipGroupSeqId"));
+			if (Shp == 1) {
+				log.info("Receiving Inventory with partial qty for Ship1");
+				F_ShipGrp_DDN.selectByVisibleText(data.get(0).get("Facility-ShipGroup"));
+				WebdriverWait.findElement("id", "createSubmit").click();
+
+				Facilities_Shipments_View.PO_Capture_ShpID(sheetname, 15);
+				Facilities_Shipments_OrderItems.PO_Partial_Shpmnt();
+				Facilities_Facilities_StockManagement.PO_Receive_Shpmnt();
+				Facilities_Shipments_View.PO_Shpmnt_Status_Val();
+
+			} else if (Shp == 2) {
+				log.info("Receiving Inventory with remaining partial qty for Ship1");
+				F_ShipGrp_DDN.selectByVisibleText(data.get(0).get("Facility-ShipGroup"));
+				WebdriverWait.findElement("id", "createSubmit").click();
+
+				Facilities_Shipments_View.PO_Capture_ShpID(sheetname, 16);
+				Facilities_Shipments_OrderItems.PO_Full_Shpmnt();
+				Facilities_Facilities_StockManagement.PO_Receive_Shpmnt();
+				Facilities_Shipments_View.PO_Shpmnt_Status_Val();
+
+			} else if (Shp == 3) {
+				log.info("Receiving Inventory with Full qty for Ship2");
+				F_ShipGrp_DDN.selectByVisibleText(data.get(5).get("Facility-ShipGroup"));
+				WebdriverWait.findElement("id", "createSubmit").click();
+
+				Facilities_Shipments_View.PO_Capture_ShpID(sheetname, 17);
+				Facilities_Shipments_OrderItems.PO_Full_Shpmnt();
+				Facilities_Facilities_StockManagement.PO_Recv_Shpmnt_Mapping();
+				Facilities_Shipments_View.PO_Shpmnt_Status_Val();
+
+			} else if (Shp == 4) {
+				log.info("Receiving Inventory with Full qty for Ship4");
+				F_ShipGrp_DDN.selectByVisibleText(data.get(8).get("Facility-ShipGroup"));
+				WebdriverWait.findElement("id", "createSubmit").click();
+
+				Facilities_Shipments_View.PO_Capture_ShpID(sheetname, 18);
+				Facilities_Shipments_OrderItems.PO_Full_Shpmnt();
+				Facilities_Facilities_StockManagement.PO_Receive_Shpmnt();
+				Facilities_Shipments_View.PO_Shpmnt_Status_Val();
+
+				WebdriverWait.findElement("xpath", "//*[@id='primaryOrderIdRowAndPrimaryShipGroupSeqId']/td[2]/a")
+						.click();
+			}
+		}
+	}
+
+//************************************************************************************************************************************************//
+	// PO With Adhoc Flow
+//************************************************************************************************************************************************//
+
+	public static void PO_Adhoc_ReceiveInv() {
+
+		log.info("Receiving Inventory for all the products");
+
+		WebdriverWait.findElement("link", "FACILITIES").click();
+		WebdriverWait.findElement("link", "Shipments").click();
+		WebdriverWait.findElement("link", "Create Shipment").click();
+
+		Select ShpType_DD = new Select(WebdriverWait.findElement("id", "shipmentTypeId"));
+		ShpType_DD.selectByVisibleText("Purchase Shipment");
+
+		WebdriverWait.findElement("id", "0_lookupId_primaryOrderId")
+				.sendKeys(PO_Inv_Adhoc_data.get(13).get("Supplier"));
+		WebdriverWait.findElement("id", "additionalShippingCharge").click();
+
+		Select F_ShipGrp_DDN = new Select(WebdriverWait.findElement("id", "primaryShipGroupSeqId"));
+		F_ShipGrp_DDN.selectByVisibleText(PO_Inv_Adhoc_data.get(0).get("Facility-ShipGroup"));
+
+		WebdriverWait.findElement("id", "createSubmit").click();
+		String InvPrd = WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[1]/td[2]")
+				.getText();
+		ExcelWriter.writeExcelFile("PO_Adhoc", 14, 4, InvPrd);
+
+		WebdriverWait.findElement("link", "Order Items").click();
+		WebdriverWait.findElement("xpath", "//*[@id='FindOrderItems']/table/tbody/tr[3]/td/input").click();
+		WebdriverWait.findElement("xpath", "//*[@id='AddOrderItems']/div/input").click();
+		WebdriverWait.findElement("link", "Receive Inventory").click();
+
+		for (int j = 0; j <= 3; j++) {
+			Select Loc_DD = new Select(WebdriverWait.findElement("id", "locationSeqId_o_" + j));
+			Loc_DD.selectByVisibleText("500");
+		}
+
+		WebdriverWait.findElement("link", "Receive").click();
+		WebdriverWait.findElement("xpath", "//*[@id='content-main-section']/div[2]/table/tbody/tr[2]/td[1]/a").click();
+		String InvShip_status = WebdriverWait
+				.findElement("xpath", "//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[2]/td[4]")
+				.getText();
+		Assert.assertEquals("Received", InvShip_status);
+		log.info("Inventory Shipment received successfully");
+
+	}
+
+//************************************************************************************************************************************************//
+	// SO Offline Flow
+//************************************************************************************************************************************************//
+
+	public static void SO_CreateShipment(List<HashMap<String, String>> data, String sheetname) throws InterruptedException {
+
+		for (int Shp = 1; Shp <= 4; Shp++) {
+
+			log.info("Create Shipments for all the products");
+
+			WebdriverWait.findElement("link", "FACILITIES").click();
+			WebdriverWait.findElement("link", "Shipments").click();
+			WebdriverWait.findElement("link", "Create Shipment").click();
+
+			Select ShpType_DD = new Select(WebdriverWait.findElement("id", "shipmentTypeId"));
+			ShpType_DD.selectByVisibleText("Sales Shipment");
+
+			WebdriverWait.findElement("id", "0_lookupId_primaryOrderId").sendKeys(data.get(14).get("Customer"));
+			WebdriverWait.findElement("id", "picklistBinId").click();
+
+			Select F_ShipGrp_DDN = new Select(WebdriverWait.findElement("id", "primaryShipGroupSeqId"));
+			if (Shp == 1) {
+				log.info("Create Shipment with partial qty for Ship1");
+				F_ShipGrp_DDN.selectByVisibleText(data.get(0).get("Facility-ShipGroup"));
+				WebdriverWait.findElement("id", "createSubmit").click();
+				String Ship1 = WebdriverWait.findElement("id", "shipmentIdDisplay").getText();
+				ExcelWriter.writeExcelFile(sheetname, 15, 4, Ship1);
+
+				Facilities_Shipments_OrderItems.SO_Partial_Shpmnt();
+				Facilities_Shipments_Edit.ShpStatus();
+
+			} else if (Shp == 2) {
+
+				log.info("Create Shipment for remaining partial qty for Ship1");
+				F_ShipGrp_DDN.selectByVisibleText(data.get(0).get("Facility-ShipGroup"));
+				WebdriverWait.findElement("id", "createSubmit").click();
+				String Ship2 = WebdriverWait.findElement("id", "shipmentIdDisplay").getText();
+				ExcelWriter.writeExcelFile(sheetname, 16, 4, Ship2);
+
+				Facilities_Shipments_OrderItems.SO_Full_Shpmnt();
+				Facilities_Shipments_Edit.ShpStatus();
+
+			} else if (Shp == 3) {
+
+				log.info("Receiving Inventory with Full qty for Ship2");
+				F_ShipGrp_DDN.selectByVisibleText(data.get(5).get("Facility-ShipGroup"));
+				WebdriverWait.findElement("id", "createSubmit").click();
+				String Ship2 = WebdriverWait.findElement("id", "shipmentIdDisplay").getText();
+				ExcelWriter.writeExcelFile(sheetname, 17, 4, Ship2);
+
+				Facilities_Shipments_OrderItems.SO_Full_Shpmnt();
+				Facilities_Shipments_Edit.ShpStatus();
+
+			} else if (Shp == 4) {
+
+				log.info("Receiving Inventory with Full qty for Ship4");
+				F_ShipGrp_DDN.selectByVisibleText(data.get(8).get("Facility-ShipGroup"));
+				WebdriverWait.findElement("id", "createSubmit").click();
+				String Ship2 = WebdriverWait.findElement("id", "shipmentIdDisplay").getText();
+				ExcelWriter.writeExcelFile(sheetname, 18, 4, Ship2);
+
+				Facilities_Shipments_OrderItems.SO_Full_Shpmnt();
+				Facilities_Shipments_Edit.ShpStatus();
+			}
+		}
+
+		// Capturing all the Invoice ID's
+		Sales_SalesOrder_View.SO_CaptureInvID();
+	}
+}

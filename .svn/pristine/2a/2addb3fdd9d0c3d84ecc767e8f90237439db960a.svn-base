@@ -1,0 +1,11 @@
+Feature: SO Flow
+
+Background: Login to the Application
+Given Launch the Application
+Then Login with valid Credentials
+
+@Test31
+Scenario: Create Quotes For SO
+
+	Given Create New Sales Quote
+	

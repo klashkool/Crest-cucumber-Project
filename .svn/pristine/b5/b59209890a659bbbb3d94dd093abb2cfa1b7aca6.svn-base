@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite failures="0" name="cucumber.runtime.formatter.JUnitFormatter" skipped="0" tests="6" time="0">
+<testcase classname="PO with Inventory Flow" name="Create Req - PO Inv Flow" time="0">
+<system-out><![CDATA[Given Launch the Application................................................skipped
+Then Login with valid Credentials...........................................skipped
+Given Create PO Req - PO Inv Flow...........................................skipped
+Then Create PO RFQ - PO Inv Flow............................................skipped
+Then Create PO Quote - PO Inv Flow..........................................skipped
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Create PO - PO Inv Flow" time="0">
+<system-out><![CDATA[Given Launch the Application................................................skipped
+Then Login with valid Credentials...........................................skipped
+Given Create New PO - Start Order - PO Inv Flow.............................skipped
+Then Add Shipping Details - PO Inv Flow.....................................skipped
+Then Add Order Items - PO Inv Flow..........................................skipped
+Then Review & Create PO - PO Inv Flow.......................................skipped
+Then Validate GrandTotal & Tax - PO Inv Flow................................skipped
+And Approve PO - PO Inv Flow................................................skipped
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Receive PO - PO Inv Flow" time="0">
+<system-out><![CDATA[Given Launch the Application................................................skipped
+Then Login with valid Credentials...........................................skipped
+Given Receive Inventory for all the facilities - PO Inv Flow................skipped
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Approve &amp; Post all the Invoices - PO Inv Flow" time="0">
+<system-out><![CDATA[Given Launch the Application................................................skipped
+Then Login with valid Credentials...........................................skipped
+Given Validate/Approve and Post all the Invoice ID - PO Inv Flow............skipped
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Make Payments for all the Invoices - PO Inv Flow" time="0">
+<system-out><![CDATA[Given Launch the Application................................................skipped
+Then Login with valid Credentials...........................................skipped
+Given Make payments for first Three Invoices - PO Inv Flow..................skipped
+]]></system-out>
+</testcase>
+<testcase classname="PO with Inventory Flow" name="Create Purchase Return - PO Inv Flow" time="0">
+<system-out><![CDATA[Given Launch the Application................................................skipped
+Then Login with valid Credentials...........................................skipped
+Given Create PO Return - PO Inv Flow........................................skipped
+]]></system-out>
+</testcase>
+</testsuite>

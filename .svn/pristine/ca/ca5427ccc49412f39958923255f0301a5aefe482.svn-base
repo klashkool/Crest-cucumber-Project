@@ -1,0 +1,231 @@
+package com.Facilities_Modules;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.Utils.Base;
+import com.Utils.ExcelReader;
+import com.Utils.ExcelWriter;
+
+
+
+public class Facilities_Shipments extends Base {
+
+	public static Logger log = Logger.getLogger(Facilities_Shipments.class);
+	WebDriverWait wait = new WebDriverWait(driver, 100);
+	List<HashMap<String, String>> PO_Inv_data = (List<HashMap<String, String>>) ExcelReader.readExcelDatafromFile(
+			"D:\\Projects\\CrestCucumber\\src\\main\\java\\com\\Utils\\Crest_TestData.xlsx", "PO_Inv");
+	
+	List<HashMap<String, String>> PO_Inv_Adhoc_data = (List<HashMap<String, String>>) ExcelReader.readExcelDatafromFile(
+			"D:\\Projects\\CrestCucumber\\src\\main\\java\\com\\Utils\\Crest_TestData.xlsx", "PO_Adhoc");
+	
+	
+	static Set<Integer> invoiceIDSet;
+	
+	
+	//Scenario: Receive PO Inventory
+	
+	public void ReceiveInv() {					
+			
+		for (int Shp = 1; Shp <= 4; Shp++) {
+
+			log.info("Receiving Inventory for all the products");
+				
+			driver.findElement(By.linkText("FACILITIES")).click();
+			driver.findElement(By.linkText("Shipments")).click();
+			driver.findElement(By.linkText("Create Shipment")).click();
+					
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("shipmentTypeId")));
+			Select ShpType_DD = new Select(driver.findElement(By.id("shipmentTypeId")));
+			ShpType_DD.selectByVisibleText("Purchase Shipment");
+			
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("0_lookupId_primaryOrderId")));
+			driver.findElement(By.id("0_lookupId_primaryOrderId")).sendKeys(PO_Inv_data.get(14).get("Supplier"));	
+			driver.findElement(By.id("additionalShippingCharge")).click();
+				
+			Select F_ShipGrp_DDN = new Select(driver.findElement(By.id("primaryShipGroupSeqId")));
+			if (Shp == 1) {
+			log.info("Receiving Inventory with partial qty for Ship1");
+			F_ShipGrp_DDN.selectByVisibleText(PO_Inv_data.get(0).get("Facility-ShipGroup"));		
+			driver.findElement(By.id("createSubmit")).click();
+			String Ship1 = driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[1]/td[2]")).getText();
+			ExcelWriter.writeExcelFile("PO_Inv", 15, 4, Ship1);
+
+			driver.findElement(By.linkText("Order Items")).click();
+			driver.findElement(By.xpath("//*[@id='FindOrderItems']/table/tbody/tr[3]/td/input")).click();
+
+			List<WebElement> Shpqty_List = driver.findElements(By.xpath("//*[@id='AddOrderItems']/table/tbody/tr"));
+			System.out.println(Shpqty_List.size());
+			for (int a = 2; a <= Shpqty_List.size(); a++) {
+			String PrdId = driver.findElement(By.xpath("//*[@id='AddOrderItems']/table/tbody/tr[" + a + "]/td[4]")).getText();
+			System.out.println(PrdId);
+						
+			System.out.println("PRODUCT ID"+a);
+			if (PrdId.equalsIgnoreCase("DNPFT001")) {						
+			driver.findElement(By.id("quantity_o_" + (a-2))).clear();
+			driver.findElement(By.id("quantity_o_" + (a-2))).sendKeys("900");		
+						 
+			String x =  driver.findElement(By.id("quantity_o_" + (a-2))).getText();
+			System.out.println("TEXT ID"+x);
+									
+			driver.findElement(By.xpath("//*[@id='AddOrderItems']/div/input")).click();						
+			driver.findElement(By.linkText("Receive Inventory")).click();
+			System.out.println("PRODUCT ID"+a);
+				
+			for(int j=0;j<=4;j++) {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("locationSeqId_o_"+j)));
+			Select Loc_DD = new Select(driver.findElement(By.id("locationSeqId_o_"+j)));
+			Loc_DD.selectByVisibleText("500");							
+			}		
+							
+			driver.findElement(By.linkText("Receive")).click();
+			driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/table/tbody/tr[2]/td[1]/a")).click();
+			String Ship1_status = driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[2]/td[4]")).getText();
+			Assert.assertEquals("Received", Ship1_status);
+			log.info("Ship1 received successfully");											
+			break;
+			}
+
+			}
+			} else if (Shp == 2) {
+			log.info("Receiving Inventory with remaining partial qty for Ship1");
+			F_ShipGrp_DDN.selectByVisibleText(PO_Inv_data.get(0).get("Facility-ShipGroup"));			
+			driver.findElement(By.id("createSubmit")).click();
+			String Ship2 = driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[1]/td[2]")).getText();
+			ExcelWriter.writeExcelFile("PO_Inv", 16, 4, Ship2);
+
+			driver.findElement(By.linkText("Order Items")).click();
+			driver.findElement(By.xpath("//*[@id='FindOrderItems']/table/tbody/tr[3]/td/input")).click();
+			driver.findElement(By.xpath("//*[@id='AddOrderItems']/div/input")).click();
+			driver.findElement(By.linkText("Receive Inventory")).click();
+					
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("locationSeqId_o_0")));
+			Select Dept_DD = new Select(driver.findElement(By.id("locationSeqId_o_0")));
+			Dept_DD.selectByVisibleText("500");
+				
+			driver.findElement(By.linkText("Receive")).click();
+			driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/table/tbody/tr[2]/td[1]/a")).click();
+			String Ship2_status = driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[2]/td[4]")).getText();
+			Assert.assertEquals("Received", Ship2_status);
+			log.info("Ship1 remaining qty received successfully");
+					//driver.findElement(By.xpath("//*[@id='primaryOrderIdRowAndPrimaryShipGroupSeqId']/td[2]/a")).click();
+			} else if (Shp == 3) {
+			log.info("Receiving Inventory with Full qty for Ship2");
+			F_ShipGrp_DDN.selectByVisibleText(PO_Inv_data.get(5).get("Facility-ShipGroup"));			
+			driver.findElement(By.id("createSubmit")).click();
+			String Ship3 = driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[1]/td[2]")).getText();
+			ExcelWriter.writeExcelFile("PO_Inv", 17, 4, Ship3);
+
+			driver.findElement(By.linkText("Order Items")).click();
+			driver.findElement(By.xpath("//*[@id='FindOrderItems']/table/tbody/tr[3]/td/input")).click();
+			driver.findElement(By.xpath("//*[@id='AddOrderItems']/div/input")).click();
+			driver.findElement(By.linkText("Receive Inventory")).click();
+			driver.findElement(By.linkText("Receive")).click();
+
+			driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/table/tbody/tr[2]/td[1]/a")).click();
+			String Ship3_status = driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[2]/td[4]")).getText();
+			Assert.assertEquals("Received", Ship3_status);
+			log.info("Ship3 received successfully");
+					
+			} else if (Shp == 4) {
+			log.info("Receiving Inventory with Full qty for Ship4");
+			F_ShipGrp_DDN.selectByVisibleText(PO_Inv_data.get(8).get("Facility-ShipGroup"));					
+			driver.findElement(By.id("createSubmit")).click();
+			String Ship4 = driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[1]/td[2]")).getText();
+			ExcelWriter.writeExcelFile("PO_Inv", 18, 4, Ship4);
+
+			driver.findElement(By.linkText("Order Items")).click();
+			driver.findElement(By.xpath("//*[@id='FindOrderItems']/table/tbody/tr[3]/td/input")).click();
+			driver.findElement(By.xpath("//*[@id='AddOrderItems']/div/input")).click();
+			driver.findElement(By.linkText("Receive Inventory")).click();
+			driver.findElement(By.linkText("Receive")).click();
+			driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/table/tbody/tr[2]/td[1]/a")).click();
+			String Ship4_status = driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[2]/td[4]")).getText();
+			Assert.assertEquals("Received", Ship4_status);
+			log.info("Ship4 received successfully");
+			driver.findElement(By.xpath("//*[@id='primaryOrderIdRowAndPrimaryShipGroupSeqId']/td[2]/a")).click();
+			}
+		}
+		
+	}
+	
+	public void CaptureInvID() {
+		
+		log.info("Receiving Inventory for all the products");
+		int j=15;
+		for (int Inv = 1; Inv<=4; Inv++) {
+
+			String bpath = "//*[@id='content-main-section']/div[5]/div[2]/table/tbody[";
+			String apath = "]/tr/td[1]";// Inv ID
+			
+			String InvID = driver.findElement(By.xpath(bpath+Inv+apath)).getText();
+		
+			ExcelWriter.writeExcelFile("PO_Inv", j, 5 , InvID);
+			j++;
+		}
+	}
+	
+//************************************************************************************************************************************************//
+	// PO With Adhoc Flow
+//************************************************************************************************************************************************//	
+	
+	public void PO_Adhoc_ReceiveInv() {
+		
+		log.info("Receiving Inventory for all the products");
+		
+		driver.findElement(By.linkText("FACILITIES")).click();
+		driver.findElement(By.linkText("Shipments")).click();
+		driver.findElement(By.linkText("Create Shipment")).click();
+				
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("shipmentTypeId")));
+		Select ShpType_DD = new Select(driver.findElement(By.id("shipmentTypeId")));
+		ShpType_DD.selectByVisibleText("Purchase Shipment");
+		
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("0_lookupId_primaryOrderId")));
+		driver.findElement(By.id("0_lookupId_primaryOrderId")).sendKeys(PO_Inv_Adhoc_data.get(13).get("Supplier"));		
+		driver.findElement(By.id("additionalShippingCharge")).click();
+		
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("primaryShipGroupSeqId")));
+		Select F_ShipGrp_DDN = new Select(driver.findElement(By.id("primaryShipGroupSeqId")));
+		F_ShipGrp_DDN.selectByVisibleText(PO_Inv_Adhoc_data.get(0).get("Facility-ShipGroup"));
+		
+		driver.findElement(By.id("createSubmit")).click();
+		String InvPrd = driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[1]/td[2]")).getText();
+		ExcelWriter.writeExcelFile("PO_Adhoc", 14, 4, InvPrd);
+
+		driver.findElement(By.linkText("Order Items")).click();
+		driver.findElement(By.xpath("//*[@id='FindOrderItems']/table/tbody/tr[3]/td/input")).click();
+		driver.findElement(By.xpath("//*[@id='AddOrderItems']/div/input")).click();
+		driver.findElement(By.linkText("Receive Inventory")).click();
+				
+		for(int j=0;j<=3;j++) {
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("locationSeqId_o_"+j)));
+			Select Loc_DD = new Select(driver.findElement(By.id("locationSeqId_o_"+j)));
+			Loc_DD.selectByVisibleText("500");							
+		}	
+			
+		driver.findElement(By.linkText("Receive")).click();
+		driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/table/tbody/tr[2]/td[1]/a")).click();
+		String InvShip_status = driver.findElement(By.xpath("//*[@id='content-main-section']/div[2]/div[2]/table/tbody/tr[2]/td[4]")).getText();
+		Assert.assertEquals("Received", InvShip_status);
+		log.info("Inventory Shipment received successfully");
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+}

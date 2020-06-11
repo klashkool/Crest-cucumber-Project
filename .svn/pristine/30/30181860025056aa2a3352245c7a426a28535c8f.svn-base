@@ -1,0 +1,70 @@
+$(document).ready(function() {var formatter = new CucumberHTML.DOMFormatter($('.cucumber-report'));formatter.uri("4_SO OfflinePayment Flow.feature");
+formatter.feature({
+  "line": 1,
+  "name": "SO Offline Payment Flow",
+  "description": "",
+  "id": "so-offline-payment-flow",
+  "keyword": "Feature"
+});
+formatter.background({
+  "line": 3,
+  "name": "Login to the Application",
+  "description": "",
+  "type": "background",
+  "keyword": "Background"
+});
+formatter.step({
+  "line": 4,
+  "name": "Launch the Application",
+  "keyword": "Given "
+});
+formatter.step({
+  "line": 5,
+  "name": "Login with valid Credentials",
+  "keyword": "Then "
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.launch_the_Application()"
+});
+formatter.result({
+  "duration": 13745339900,
+  "status": "passed"
+});
+formatter.match({
+  "location": "PO_Inventory_Flow_Stepdef.login_with_valid_Credentials()"
+});
+formatter.result({
+  "duration": 5185437800,
+  "status": "passed"
+});
+formatter.scenario({
+  "line": 38,
+  "name": "Create Sales Return - SO Offline Payment Flow",
+  "description": "",
+  "id": "so-offline-payment-flow;create-sales-return---so-offline-payment-flow",
+  "type": "scenario",
+  "keyword": "Scenario",
+  "tags": [
+    {
+      "line": 37,
+      "name": "@Test36"
+    }
+  ]
+});
+formatter.step({
+  "line": 40,
+  "name": "Create SO Return - SO Offline Payment Flow",
+  "keyword": "Given "
+});
+formatter.match({
+  "location": "SO_OfflinePayment_Flow_Stepdef.create_SO_Return_SO_Offline_Payment_Flow()"
+});
+formatter.result({
+  "duration": 9004157900,
+  "status": "passed"
+});
+formatter.after({
+  "duration": 835104100,
+  "status": "passed"
+});
+});

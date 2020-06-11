@@ -1,0 +1,33 @@
+Feature: SO Offline Payment Flow 
+
+Background: Login to the Application 
+	Given Launch the Application 
+	Then Login with valid Credentials 
+	
+@Test31 
+Scenario: Create Quotes For SO 
+
+	Given Create New Sales Quote 	
+	
+@Test32 
+Scenario: Create SO Offline Payment Flow
+
+	Given Create New SO - Offline Flow 
+	Then Add Shipping Details - Offline Flow
+	Then Add Order Items - Offline Flow
+	Then Review & Create SO - Offline Flow
+	Then Validate GrandTotal & Tax for SO - Offline Flow
+	And Approve SO - Offline Flow
+
+@Test33	
+Scenario: Create Shipment
+
+	Given  Create Shipment for all the facilities 	
+
+@Test34	
+Scenario: Approve & Post all the Invoices and Make Payments 
+
+	Given Validate/Approve and Post all the Invoice ID for SO
+	Then Validate all the Shipments under Finance Module
+	And Make Payments for all the Invoice ID for SO
+	

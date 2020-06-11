@@ -1,0 +1,130 @@
+package com.PO_Scenarios_StepDefinitions;
+
+import org.openqa.selenium.WebDriver;
+
+import com.AccountsPayable_Modules.AP_Payments;
+import com.AccountsPayable_Modules.AP_PurchaseInvoices;
+import com.Crest_ERP_Login.Crest_Login;
+import com.Facilities_Modules.Facilities_Shipments;
+import com.Financials_Modules.Financials_AcctTransaction;
+import com.Procurement_Modules.Procurement_PurchaseOrder;
+import com.Procurement_Modules.Procurement_Quotes;
+import com.Procurement_Modules.Procurement_RFQ;
+import com.Procurement_Modules.Procurement_Req;
+import com.Utils.Base;
+import com.aventstack.extentreports.gherkin.model.Scenario;
+
+import cucumber.api.java.After;
+import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+
+public class PO_Inventory_Flow_Stepdef extends Base{
+	
+	Crest_Login login;
+	Procurement_Req PO_Req;
+	Procurement_RFQ PO_RFQ;
+	Procurement_Quotes PO_Quotes;
+	Procurement_PurchaseOrder PO;
+	Facilities_Shipments Recv_Inv;
+	AP_PurchaseInvoices AP_PI;
+	AP_Payments ap_Payments;
+	Financials_AcctTransaction financeAcctTrans;	 
+	
+	//Crest Login
+	@Given("^Launch the Application$")
+	public void launch_the_Application()  {		
+		Base.initialization();
+	}
+
+	@Then("^Login with valid Credentials$")
+	public void login_with_valid_Credentials()  {
+		login = new Crest_Login();
+			login.Login();
+	}
+	
+	//Scenario: Create Req for PO Inventory	
+	@Given("^Create PO Req for Inv$")
+	public void create_New_Requirements_for_PO(){	
+		PO_Req = new Procurement_Req();
+		PO_Req.PO_Req_Inv();	
+	}	
+
+	@Then("^Create PO RFQ for Inv$")
+	public void create_PO_RFQ(){
+		PO_RFQ = new Procurement_RFQ();
+		PO_RFQ.PO_RFQ_Inv();
+	    
+	}
+
+	@Then("^Create PO Quote for Inv$")
+	public void create_PO_Quote() {
+		
+	}
+	
+	//Scenario: Create PO with Inventory
+	
+	@Given("^Create New PO & Enter Organization & Supplier$")
+	public void create_New_PO_Enter_Organization_Supplier(){  
+		PO = new Procurement_PurchaseOrder();
+		PO.Start_Order();
+	}
+	
+	@And("^Add Ship Groups$")
+	public void add_Ship_Groups(){
+		PO.Add_ShpGrps();
+	}		
+	
+	@And("^Add Products$")
+	public void add_Products(){
+		PO.Add_Prd();
+	}
+
+	@Then("^Validate GrandTotal & Tax$")
+	public void validate_GrandTotal_Tax() {
+		PO.GrdTotal_Val();
+	   
+	}
+
+	@And("^Approve PO$")
+	public void approve_PO() {
+		PO.Approve_Po();
+	}	
+	
+	
+	//Scenario: Receive PO Inventory
+	
+	@Given("^Receive Inventory for all the facilities$")
+	public void receive_Inventory_for_all_the_facilities() {
+		Recv_Inv = new Facilities_Shipments();
+		Recv_Inv.ReceiveInv();
+		Recv_Inv.CaptureInvID();
+	}
+		
+	//Scenario: Approve & Post all the Invoices and Make Payments
+	
+	@Given("^Validate/Approve and Post all the Invoice ID$")
+	public void validate_Approve_and_Post_all_the_Invoice_ID() {
+		AP_PI = new AP_PurchaseInvoices();
+		AP_PI.InvoicePosting();
+	}
+	
+	@Then("^Validate all the Inventories under Finance Module$")
+	public void navigate_to_Finance_Module_Validate_all_the_Inventories() {
+//		financeAcctTrans = new Financials_AcctTransaction();
+//		financeAcctTrans.Acct_Trans();			    
+	}
+
+	@And("^Make Payments for all the Invoice ID$")
+	public void make_Payments_for_all_the_Invoice_ID() throws InterruptedException {
+		ap_Payments = new AP_Payments();
+		ap_Payments.Payments();
+	}
+	
+	@After
+	 
+	 public static void TearDown() {
+		 driver.quit();
+	 }
+
+}

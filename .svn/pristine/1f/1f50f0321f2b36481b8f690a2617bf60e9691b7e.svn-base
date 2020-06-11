@@ -1,0 +1,199 @@
+package com.Sales_Modules;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.junit.Assert;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.Utils.Base;
+import com.Utils.CrestTestDataReader;
+import com.Utils.ExcelWriter;
+
+public class Sales_SalesOrder extends Base {
+
+	static WebDriverWait wait = new WebDriverWait(driver, 100);
+	public static Logger log = Logger.getLogger(Sales_SalesOrder.class);
+	static List<HashMap<String, String>> SO_data = CrestTestDataReader.getSOData();
+
+	public static String so_Number;
+
+	public static void SO_StartOrder() {
+
+		driver.findElement(By.linkText("SALES")).click();
+		driver.findElement(By.linkText("Sales Order")).click();
+		driver.findElement(By.linkText("Create Sales Order")).click();
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("billToCustomerPartyId")));
+		Select Org_DD = new Select(driver.findElement(By.id("billToCustomerPartyId")));
+		Org_DD.selectByVisibleText(SO_data.get(0).get("Organization"));
+
+		// driver.findElement(By.name("partyId")).sendKeys(SO_data.get(0).get("Customer"));
+		driver.findElement(By.name("partyId")).sendKeys("10020");// Metal SHop
+		driver.findElement(By.name("orderName")).sendKeys("SO_NormalFlow");
+
+		// Adding Current Date(From Date)
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		String Fromdate = (dateFormat.format(new Date()));
+		driver.findElement(By.name("orderDate_i18n")).sendKeys(Fromdate);
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("orderType")));
+		Select OrdType_DD = new Select(driver.findElement(By.id("orderType")));
+		OrdType_DD.selectByVisibleText(SO_data.get(0).get("OrderType"));
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("currencyUomId")));
+		Select Currency_DD = new Select(driver.findElement(By.id("currencyUomId")));
+		Currency_DD.selectByVisibleText(SO_data.get(0).get("Currency"));
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("productStoreId")));
+		Select PrdStore_DD = new Select(driver.findElement(By.id("productStoreId")));
+		PrdStore_DD.selectByVisibleText("General Sales Store");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("salesChannelEnumId")));
+		Select SalesChn_DD = new Select(driver.findElement(By.id("salesChannelEnumId")));
+		SalesChn_DD.selectByVisibleText("Web Channel");
+
+		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("numberingFormatId")));
+		Select NumType_DD = new Select(driver.findElement(By.id("numberingFormatId")));
+		NumType_DD.selectByVisibleText("Sales order");
+
+		driver.findElement(By.id("paymentMethodTypeAndId")).click();
+
+		driver.findElement(By.linkText("Continue")).click();
+
+	}
+
+	public static void SO_ShippingDetails() {
+
+		log.info("SO Adding Ship Groups");
+		String facility = "_shipGroupFacilityId";
+		String ShpAdd = "_contactMechId";
+		String Shpmethd = "_shipping_method";
+
+		for (int a = 0; a <= 2; a++) {
+			Select Shpfacility = new Select(driver.findElement(By.id(a + facility)));
+			Select ShpAddress = new Select(driver.findElement(By.id(a + ShpAdd)));
+			Select ShpMethod = new Select(driver.findElement(By.id(a + Shpmethd)));
+			if (a == 0) {
+				Shpfacility.selectByVisibleText(SO_data.get(1).get("Facility-ShipGroup"));
+				ShpAddress.selectByVisibleText("EASYFLOWERS");
+				ShpMethod.selectByVisibleText("Standard");
+				driver.findElement(By.xpath("//*[@id='content-main-section']//div//a")).click();
+			} else if (a == 1) {
+				Shpfacility.selectByVisibleText(SO_data.get(6).get("Facility-ShipGroup"));
+				ShpAddress.selectByVisibleText("EASYFLOWERS");
+				ShpMethod.selectByVisibleText("Standard");
+				driver.findElement(By.xpath("//*[@id='content-main-section']//div//a")).click();
+			} else if (a == 2) {
+				Shpfacility.selectByVisibleText(SO_data.get(9).get("Facility-ShipGroup"));
+				ShpAddress.selectByVisibleText("EASYFLOWERS");
+				ShpMethod.selectByVisibleText("Standard");
+			}
+		}
+		driver.findElement(By.xpath("//*[@id='content-main-section']//div[3]//a[1]")).click();
+	}
+
+	public static void SO_OrderItems() throws InterruptedException {
+
+		log.info("SO Adding products");
+		for (int p = 0; p <= 9; p++) {
+
+			Thread.sleep(1000);
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("add_product_id")));
+			driver.findElement(By.name("add_product_id")).sendKeys(SO_data.get(p).get("Product ID"));
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("quantity")));
+			driver.findElement(By.name("quantity")).sendKeys(SO_data.get(p).get("Qty"));
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("departmentName")));
+			Select Dept_DD = new Select(driver.findElement(By.id("departmentName")));
+			Dept_DD.selectByVisibleText(SO_data.get(p).get("Dept"));
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("toGroupIndex")));
+			Select Fac_DD = new Select(driver.findElement(By.id("toGroupIndex")));
+
+			if (p <= 4) {
+				Fac_DD.selectByVisibleText(SO_data.get(0).get("Facility-ShipGroup"));
+				WebElement ATP = driver.findElement(By.id("ATP"));
+				WebElement QOH = driver.findElement(By.id("QOH"));
+				Assert.assertEquals(true, ATP.isDisplayed());
+				Assert.assertEquals(true, QOH.isDisplayed());
+
+			} else if (p >= 5 && p <= 7) {
+				Fac_DD.selectByVisibleText(SO_data.get(5).get("Facility-ShipGroup"));
+				WebElement ATP = driver.findElement(By.id("ATP"));
+				WebElement QOH = driver.findElement(By.id("QOH"));
+				Assert.assertEquals(true, ATP.isDisplayed());
+				Assert.assertEquals(true, QOH.isDisplayed());
+			} else if (p >= 8 && p <= 9) {
+				Fac_DD.selectByVisibleText(SO_data.get(8).get("Facility-ShipGroup"));
+				WebElement ATP = driver.findElement(By.id("ATP"));
+				WebElement QOH = driver.findElement(By.id("QOH"));
+				Assert.assertEquals(true, ATP.isDisplayed());
+				Assert.assertEquals(true, QOH.isDisplayed());
+			}
+
+//			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("dropShipReq")));
+//			Select DropShp_DD = new Select(driver.findElement(By.id("dropShipReq")));
+//			DropShp_DD.selectByVisibleText("No");
+
+			WebElement Price = driver.findElement(By.id("priceValue"));
+			Assert.assertEquals(true, Price.isDisplayed());
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("itemComment")));
+			driver.findElement(By.name("itemComment")).sendKeys("Test");
+
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("submitItems")));
+			driver.findElement(By.name("submitItems")).click();
+		}
+
+		driver.findElement(By.linkText("Continue")).click();
+		driver.findElement(By.linkText("Create")).click();
+		Alert alert = driver.switchTo().alert();
+		alert.accept();
+		log.info("SO Number Created Successfully");
+
+		String SO_Num = driver
+				.findElement(By.xpath("//*[@id='content-main-section']/div[1]/div[2]/table/tbody/tr[1]/td[2]/a"))
+				.getText();
+		System.out.println("SO Number = " + SO_Num);
+		so_Number = SO_Num;
+		ExcelWriter.writeExcelFile("SO", 15, 3, SO_Num);
+
+	}
+	
+	public static void SO_GrdTotal_Val() {
+
+		log.info("Validating GrandTotal");
+		String GrdTotal = driver
+				.findElement(By.xpath("//*[@id='content-main-section']/div[6]/div[2]/table/tbody/tr[14]/td[3]/span"))
+				.getText().replace("₹", "").replace(",", "");
+		System.out.println(GrdTotal);
+		System.out.println(SO_data.get(18).get("Dept"));
+		Assert.assertEquals(SO_data.get(18).get("Dept"), GrdTotal);
+		log.info("Grand Total & Tax Amt validated Successfully for SO Normal Flow");
+	}
+
+	public static void Approve_SO() {
+
+		log.info("Approve SO Normal Flow");
+		
+		driver.findElement(By.linkText("Approve Order")).click();
+		String App_Status_Val = driver
+				.findElement(By.xpath("//*[@id='content-main-section']//div//table//tbody//tr[11]//td[2]"))
+				.getText();
+		Assert.assertEquals("Approved", App_Status_Val);
+		log.info("Status validated successfully as Approved");
+
+	}
+
+
+}
